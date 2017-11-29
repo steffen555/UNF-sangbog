@@ -871,7 +871,7 @@ environment's documentation}
 
 %%%
 \newcommand{\STitle}[3][Y]{%
-  \setcounter{SBVerseCnt}{0}%
+  \setcounter{SBVerseCnt}{-1}%
   \setcounter{SBSectionCnt}{0}%
   \ifExcludeSong\relax%
     \else\keyIndex{{\protect\sbChord#3\protect\relax} -- #2}{\theSBSongCnt}\fi%
@@ -964,7 +964,7 @@ environment's documentation}
     \renewcommand{\LeftMarginSBVerse}  {\LeftMarginSBChorus}
   \fi
   \begin{center}
-    \needspace{0\baselineskip}
+    \needspace{1\baselineskip}
     \STitle[N]{\theSongTitle}{#3}\\
     \vspace{-.5ex}
     \SBMel[N]{#4}{#7}\\
@@ -1043,7 +1043,7 @@ environment's documentation}
           \fi
         \end{center}%
         %
-        \setcounter{SBVerseCnt}{0}%
+        \setcounter{SBVerseCnt}{-1}%
         \setcounter{SBSectionCnt}{0}%
 }{\relax}
 \newenvironment{songTranslation}[4]{% Comment marker negates the newline.

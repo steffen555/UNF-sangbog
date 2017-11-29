@@ -89,6 +89,7 @@
 \usepackage{amsthm}
 \usepackage{color}
 \usepackage{needspace}
+\usepackage{stackengine,wasysym}
 
 
 
@@ -149,7 +150,23 @@
 \newcommand{\LFootFont}{\scriptsize}            % = cmr8   at  8pt
 \newcommand{\CFootFont}{\tiny\myTinySF}         % = cmss8  at  8pt
 \newcommand{\RFootFont}{\scriptsize}            % = cmr8   at  8pt
-\newcommand{\SBRepeat}[1]{#1\\#1} %TODO: lav ordentlig med musik-gentagelses-tegn
+
+\def\repeat{%
+  \stackanchor{.}{.}%
+  \rule[-\dp\strutbox]{.3pt}{\normalbaselineskip}%
+  \kern0.5pt%
+  \rule[-\dp\strutbox]{1pt}{\normalbaselineskip}%
+  \kern1pt%
+}
+\def\frepeat{%
+  \kern1pt%
+  \rule[-\dp\strutbox]{1pt}{\normalbaselineskip}%
+  \kern0.5pt%
+  \rule[-\dp\strutbox]{.3pt}{\normalbaselineskip}%
+  \stackanchor{.}{.}%
+}
+\newcommand{\SBRepeat}[1]{\frepeat #1\repeat} %TODO: lav ordentlig med musik-gentagelses-tegn
+\setcounter{SBSongCnt}{-1}
 \renewcommand{\SBWAndMTag}{Forfatter:}
 \renewcommand{\SBUnknownTag}{Ukendt}
 \renewcommand{\SBChorusTag}{Ref.}
@@ -236,19 +253,74 @@
 % Songbook begins.
 %%%
 
+\chapter*{Os mod de andre}
+\input{songs/vi_kan_ikke_li.tex}
+\input{songs/vi_er_ikke_humanister.tex}
 
-\chapter*{Generelt}
-\input{songs/10_smaa_biorus.tex}
+\chapter*{UNF}
+\input{songs/minken_mink.tex}
+\input{songs/sciencecamps.tex}
+% Det var i 1944
+% Din TBF
+% Hvad må man i UNF
+
+\chapter*{Diverse}
+% Din mor, TK
+% Gaffa og WD-40, TK
+% Tål daj i læseferien, TK
+% Doom, Doom
+% Hvad skal vi TeX'e i nat
+% Jeg har set en rigtig fysiker
+% Jeg' en nørd
+% Når en humanist adderer
+% Sortsnak
 \input{songs/puma.tex}
 \input{songs/alfabetsangen.tex}
+\input{songs/laerkerede.tex}
+\input{songs/rekursiv_skovsang.tex}
 \input{songs/brug_latex.tex}
+\input{songs/ode_til_bacon.tex}
+\input{songs/homo.tex}
 \input{songs/fulbert_og_beatrice.tex}
+
 \chapter*{Fysik}
 \input{songs/vaabenfysik.tex}
 \input{songs/fasebal.tex}
+% ASTRID, TK
+% Jeg er fysiker
+% Steve Hawking
 
 \chapter*{Matematik}
 \input{songs/kanoniske.tex}
+\input{songs/matmatik.tex}
+\input{songs/matrix.tex}
+% Er du dus med Grassmans lemma, TK
+% Chifitter
+% Her på matømatik
+% Jeg er en matematiker fra HCØ
+% På mat'matik
+
+% # Datalogi
+% Se min kode
+% Jeg har fundet mig en bug, TK
+% Linieskriverdriversangen
+% Server'n er crashed
+
+\chapter*{Kemi}
+\input{songs/periodic_table.tex}
+% Kemisk elskovsvise
+% Kemisk julevise
+
+\chapter*{Biologi}
+\input{songs/10_smaa_biorus.tex}
+% Spas i waders
+
+% # Nano
+% Nano, TK
+
+% # Alkohol og druk
+% Busted, TK
+
 
 
 %\input{songs/original_church_songs.tex}
