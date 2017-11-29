@@ -1,0 +1,141 @@
+@(#)$Id: README,v 1.3 2010-04-12 18:04:29 rathc Exp $
+
+			       - - - - - - - - -
+                                   
+			   R E L E A S E   N O T E S
+                                   
+		       - - - - - - - - - - - - - - - - -
+                                   
+	         LaTeX Songbook Style, Version 4.5, 2010/04/30
+                                   
+	      - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+		   Copyright (c) 1992--2010 Christopher Rath
+			     All rights reserved.
+
+	      - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                   
+		    Christopher Rath <christopher@rath.ca>
+
+	      - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Legal Stuff:
+
+    This package is free software; with the exception of conditionals.sty, you
+    can redistribute it and/or modify it under the terms of the GNU Lesser
+    General Public License as published by version 2.1 of the Free Software
+    Foundation (conditionals.sty is public domain and not bound by LGPL).
+
+    This package is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library; if not, I'll be glad to provide one.
+
+Changes in Release 4.5:
+
+    * at Adam Fletcher's prompting, this release contains a new per-song 
+      compactsongmode
+
+Changes in Release 4.4:
+
+    * at Donald Arseneau's request, added language to state that
+      conditionals.sty is public domain
+
+Changes in Release 4.3:
+
+    * found a problem with the optional parameter to the xlatn environment
+      added in Release 4.2; that optional parameter has been removed
+    * a new songTranslation environment added to provide the required
+      capability for the Artist index option
+    * added a new song to the sample songbook to act as a test case
+      for translation
+
+
+Changes in Release 4.2:
+
+    * added a new Artist index option
+    * added a new optional parameter to the xlatn environment; in support of
+      the new Artist index option
+
+
+chordbk, wordbk, overhead:
+
+    These styles have been used to produce the songbooks for our church.  We
+    needed to produce books that our song-leaders could use, as well as books
+    for use in the congregation; so, these styles were written.
+
+    The `chordbk' option is used to print a songbook with words and chords, and
+    it also supports a `compactsong' option which lays out the song in two
+    columns per page instead of one (the `wordbk' and `overhead' options do not
+    support compactsong mode at present).  The `wordbk' option is used to print
+    a words-only songbook.  The `overhead' option is used to print overhead
+    transparencies.  They all use the same LaTeX input file.  `Wordbk' and
+    `overhead' modes simply ignore all of the chord information.
+
+
+songbook.dtx:
+
+    This is both the formal documentation for the Songbook style as well as
+    its source code.  A .pdf file is provided, as well as the .tex file.
+
+
+sample-sb.tex:
+
+    This is a sample songbook.  This file is used to produce the sample???.dvi
+    files included with this package.  To regenerate the .dvi files, simply
+    uncomment the appropriate \document line and re-LaTeX the file.
+
+
+Manifest:
+
+    conditionals.sty    Donald Arseneau's conditional tests.
+    contrib/		Directory containing user contributed utilities.
+    LesserGPL.txt       Terms & conditions under which the style is 
+			distributed.
+    mksbkdx		A shell script to make the index by song key.
+    mksbtdx             A shell script to make the index by song title.
+    relnotes.txt        The songbook package release notes (this file).
+    sample-sb.tex       A sample songbook.
+    sampleCBK.pdf       Sample-sb.tex formatted using chordbk.sty.
+    sampleKdx.pdf       The sample key index run through LaTeX.
+    sampleKdx.tex       Key index for the sample songbook.
+    sampleOH.pdf        Sample-sb.tex formatted using overhead.sty.
+    sampleTdx.pdf       The sample title index run through LaTeX.
+    sampleTdx.tex       Title index for the sample songbook.
+    sampleToc.pdf       The sample TOC run through LaTeX.
+    sampleToc.tex       TOC for the sample songbook.
+    sampleWBK.pdf       Sample-sb.tex formatted using wordbk.sty.
+    songbook.pdf        The \Songbook's documentation.
+    songbook.ist        The songbook package makeindex .ist file.
+    songbook.dtx        The base style file.
+    songbook.ins	Install script to create .sty from .dtx.
+
+
+Support:
+
+    Please email me for help using the files.  Please let me know about any
+    bugs and problems.
+
+    There is a SongBook Style home page.  Its URL is:
+
+	http://www.rath.ca/Misc/Songbook/
+
+    I will make bug fixes, other user's contributed macros and scripts, and the
+    latest release of the software available on this web server.
+
+
+    Christopher Rath        christopher@rath.ca        (613) 824-4584
+    1371 Major Rd.
+    Ottawa, ON
+    Canada   K1E 1H3
+
+
+
+
+Local Variables: 
+        mode:        indented-text
+        fill-column: 79 
+End: 

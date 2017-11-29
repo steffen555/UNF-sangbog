@@ -1,0 +1,96 @@
+$Id: crd2sb.txt,v 1.3 1997/11/21 21:38:35 abel Exp $
+(C)Copyright 1997 Abel Chow <abel@g2networks.com>
+
+What does ``crd2sb'' do?
+
+usage: crd2sb filename.crd
+
+``crd2sb'' takes Chordpro songs and generates 
+
+		  What's the format of a `crd' file?
+
+----------------------------------------------------------------------
+
+Typically, a song file looks like:
+
+{t:Song Title}
+{st:Author}
+{st:(C)Copyright information}
+# key: G
+# sref: ScriptRef 3:16
+# CCLI
+# intro: G D C D
+[|][G]This [Bm]is a [|][C]song.
+[|][Dsus]La, la, [|][D]la, la, la.
+[|][G]This [Bm]is a [|][C]song.
+[|][Dsus]This is a[|D]nother line.[|][Dsus] [/] [D] [Dmaj7][|][D]
+
+{soc}
+[|][G]This is the [|][D]cho[Dsus]-[|][D]-[A]rus.
+[|][Am]This is the [|][G]cho[D]rus.
+[|][G]This is the [|][D]cho[Dsus]-[D]-[|][A]rus.
+[Am]This [|][C]is the [|][Gsus]cho[|][G]rus.
+{eoc}
+
+[|][G]This [Bm]is the [|][C]second verse.
+[|][Dsus]La, la, [|][D]la, la, la ...
+
+----------------------------------------------------------------------
+
+Generally, if you have multiple chord changes within a word, you'll
+want to use the [chord]- structure.  This will put a dash in the
+chordbook output (but not the wordbook or overhead versions).
+
+----------------------------------------------------------------------
+
+			  Comment Directives
+
+Comments are any line that begins with `#'.  Certain directives are
+embedded in the comments so that Chordpro doesn't see them (but they
+can be parsed by ``crd2sb'').
+
+The currently supported comment directives are:
+
+key, to specify the key of the song, e.g.
+# key: G
+
+section, for when you want a section defined instead of a verse, e.g.
+# section:
+
+note, \SBMargNote{}
+# note: 1997 Missions Conference Theme Song
+
+tex, a catchall for putting TeX in the file
+# tex: \CBPageBrk
+
+intro, for \SBIntro
+# intro: |G D C|
+
+----------------------------------------------------------------------
+
+	   Supported Chordpro Directives "{directive:args}"
+
+{title:Title}, {t:Title} -> title of song
+{subtitle:Subtitle}, {st:Subtitle} -> used for author, copyright
+{comment:This is a comment.}, {c:This is a comment} -> ignored
+{new_song}, {ns} -> ends current song, starts a new song
+{start_of_chorus}, {soc} -> Beginning delimiter for chorus.
+{end_of_chorus}, {eoc} -> Ending delimiter for chorus
+
+----------------------------------------------------------------------
+
+		    Chordpro/SongBook.sty Mappings
+
+[Asus]word	-> \Ch{Asus}{word}
+[Asus]-		-> \Ch{Asus}{\SBem}
+[Asus][A]	-> \Ch{Asus}{}\Ch{A}{}
+(abc)		-> {\em abc}
+...		-> \ldots
+
+----------------------------------------------------------------------
+
+				To Do
+
+- Create example file exercising all the features.
+- Explain [|].
+- Rewrite docs.

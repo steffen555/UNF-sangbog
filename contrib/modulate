@@ -1,0 +1,267 @@
+#!/usr/bin/perl -w
+###
+# modulate - Modulate a song from one key to another.
+#
+# @(#)$Id: modulate,v 1.6 2006/10/15 15:48:10 rathc Exp $
+# Copyright 1998--2002 Christopher Rath <christopher@rath.ca>
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of version 2.1 of the GNU Lesser General Public
+# License as published by the Free Software Foundation.
+#
+# This package is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied
+# warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the GNU Lesser General Public License for more
+# details.
+#
+# USAGE: modulate [+-]<semitones> [filename]
+#
+# DESCRIPTION:
+#
+#	Modulate a song from one key to another.  The destination key is
+#	required to determine how to handle some troublesome note names (e.g.,
+#	is F to be named E# or F.
+#
+#	This program is hard-wired to my own songbook coding style, some
+#	customization will be required if your coding style differs much from
+#	mine.
+#
+#	To use this program, feed a song into the modulate program.  The
+#	beginning of the song MUST begin with a \begin{song} statement.  Any
+#	text preceeding the \begin{song} will be ignored.
+#
+#	For example, feeding this:
+#
+#		\begin{song}{What A Mighty God We Serve}{C}
+#		  {Public Domain}
+#		  {Unknown}
+#		  {Isaiah 9:6}
+#		  {\NotCCLIed}
+#	
+#		  % Copyright verified by:	Christopher Rath
+#		  % Words verified by:            Christopher Rath
+#		  % Chords verified by:           Priscilla Gruver
+#		  \renewcommand{\RevDate}{February~11,~1993}
+#		  \SBRef{Hosanna! Music Book~I}{\#93}
+#	
+#		  \Ch{C}{What} a mighty God we serve,
+#	
+#		  What a mighty God we \Ch{G7}{serve},
+#
+#	will result in:
+#
+#		\STitle{What A Mighty God We Serve}{D}
+#	
+#		  \Ch{D}{What} a mighty God we serve,
+#	
+#		  What a mighty God we \Ch{A7}{serve},
+#	
+#	being emitted by modulate.
+###
+
+###
+# Specify constants and variables.
+#
+local($keyStr,
+      $oldKey,
+      $title);
+
+local(%rawKeys) = (
+    '0',  'A',
+    '1',  'Bb',
+    '2',  'B',
+    '3',  'C',
+    '4',  'C#',
+    '5',  'D',
+    '6',  'Eb',
+    '7',  'E',
+    '8',  'F',
+    '9',  'F#',
+    '10', 'G',
+    '11', 'Ab'
+    );
+
+local(%rawNotes) = (
+    'A',   '0',
+    'A#',  '1',  'Bb',  '1',
+    'B',   '2',  'Cb',  '2',
+    'B#',  '3',  'C',   '3',
+    'C#',  '4',  'Db',  '4',
+    'D',   '5',
+    'D#',  '6',  'Eb',  '6',
+    'E',   '7',  'Fb',  '7',
+    'E#',  '8',  'F',   '8',
+    'F#',  '9',  'Gb',  '9',
+    'G',  '10',
+    'G#', '11',  'Ab', '11'
+);
+
+###
+# Test chord: A#modifier/Fbtrailer
+sub modChord {
+    local($oldCh, $modVal) = (@_);
+    local($newCh);
+
+    if ($oldCh =~ /^[\{\[\]]/) {
+	$newCh = $oldCh;
+    } elsif ($oldCh =~ m%(^[A-G#b]+)([^/]*)/?([A-G#b]*)(.*)$%) {
+	local($chord, $modifier, $bass, $trailer) = ($1, $2, $3, $4);
+
+	$newCh = modNote($chord, $modVal);
+
+	if (length($modifier)) {
+	    $newCh .= $modifier;
+	}
+
+	if (length($bass)) {
+	    $newCh .= '/';
+	    $newCh .= modNote($bass, $modVal);
+
+	    if (length($trailer)) {
+		  $newCh .= $trailer;
+	    }
+	}
+    } else {
+	$newCh = $oldCh;
+    }
+    
+    return $newCh;
+}
+
+
+sub modKey {
+    local($oldKey, $modVal) = (@_);
+    local($newKey) = (0);
+    
+    $oldKey =~ s/\$\\sharp\$/\#/g;
+    $oldKey =~ s/\$\\flat\$/b/g;
+
+    $newKey = modChord($oldKey, $modVal);
+
+    $newKey =~ s/\#/\$\\sharp\$/g;
+    $newKey =~ s/b/\$\\flat\$/g;
+
+    return($newKey);
+}
+
+
+sub modNote {
+    local($oldNote, $modVal) = (@_);
+    local($newNote) = (0);
+    
+    $newNote = $rawKeys{($rawNotes{$oldNote} + $modVal)%12};
+
+    return($newNote);
+}
+
+
+###
+# setKeyArray() - Patch %rawKeys for the key we're working in.
+#
+sub setKeyArray {
+    local($newKey) = (@_);
+
+    if ($newKey =~ /^E/) {
+	$rawKeys{'6'}  = 'D#';
+	$rawKeys{'11'} = 'G#';
+    }
+}
+
+
+###
+# Get command line parameters.
+#
+if ($#ARGV < 0) {
+    $semitones = 2;
+#    die "USAGE: modulate [+-]<semitones> [inputFile]\n";
+} else {
+    $semitones = $ARGV[0];
+    shift;
+}
+
+if (@ARGV) {
+    $inFile = $ARGV[0];
+} else {
+    $inFile = '-';
+}
+
+open(INFILE, $inFile) || die "Couldn't open input file; aborting.\n";
+
+
+###
+# Skip up to the \song macro; then scan the macro and figure out what key the
+# song is in.  Then skip ahead to the first line containing a \Ch macro.
+#
+while (<INFILE>)
+{
+    if (/\\begin\{song\}\{([^\}]*)\}\{([^\}]*)\}/) { 
+
+	$title  = $1;
+	$oldKey = $2;
+        $keyStr = modKey($2, $semitones);
+
+	print '\\STitle{'."$title".'}{'."$keyStr".'}'."\n";
+	print "\n";
+
+	setKeyArray($keyStr);
+	
+        last;
+    }
+}
+
+if (eof()) {
+    print "$0: ERROR: couldn't find `\\begin{song}{}{}' block, aborting.";
+} else {
+    local($chord,
+	  $prefix,
+	  $suffix);
+    
+    while (<INFILE>) {
+	if (/^\s+\{/
+	    || /^\s+%/
+	    || /^\s+\\renewcommand/
+	    || /^\s+\\FLineIdx/
+	    || /^\s+\\SBRef/
+	    || /^\s+$/) {
+	    next;
+	} else {
+	    chop;
+	    last;
+	}
+    }
+
+    ###
+    # Split the line into 3 pieces: a prefix, the chord itself (i.e., the first
+    # parameter to the \Ch command) and a suffix.  We then modulate the chord
+    # itself, output the prefix followed by the chord; then we reset $_ to the
+    # suffix and re-check it for more \Ch macros.  When we've run out of \Ch
+    # macros, get the next line of the file.
+    #
+    # Test line: \Ch{C}{What} a mighty God we \Ch{C}{serve!}\Ch{[}{}\Ch{F}{} \Ch{C}{}\Ch{]}{}
+    while (1) {
+	if (/\\end\{song\}/) {
+	    last;
+	} elsif (/(\\Ch[rX]*\{)([^\}]*)/) {
+	    $prefix = $`.$1;
+	    $chord  = $2;
+	    $suffix = $';
+
+	    $chord = modChord($chord, $semitones);
+
+	    printf("%s%s", $prefix, $chord);
+	    
+	    $_ = $suffix;
+	} else {
+	    printf("%s\n", $_);
+
+	    if (eof(INFILE)) {
+		last;
+	    } else {
+		$_ = <INFILE>;
+		chop;
+	    }
+	}
+    }
+}
+

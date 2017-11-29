@@ -1,0 +1,243 @@
+#!/usr/local/bin/perl
+
+# crd2sb - convert chordpro files to songbook (LaTeX style)
+
+# Usage: crd2sb filename.crd [filename2.crd] . . [filenamen.crd]
+
+# The input files are "*.crd" and the output files are "*.tex" (in the
+# current directory).
+
+# $Id: crd2sb,v 1.9 1997/12/05 19:25:05 abel Exp $
+
+# (C)Copyright 1997 Abel Chow <abel@g2networks.com>
+
+# You may distribute under the terms of the Artistic License,
+# as specified in the relnotes.txt file.
+
+use File::Basename;
+
+$debuglevel = 0;
+$date = localtime;
+
+sub Init
+{
+    $title = "";
+    $key = "";
+    $copyright = "Unknown";
+    $wandm = "Unknown";
+    $sref = "";
+    $ccli = "";
+    $lyrics = "";
+
+    $nextenv = "SBVerse";
+}
+    
+sub EndSong
+{
+    unless ($title) {
+	print STDERR "$file:$.: No title defined for song.\n";
+	Init();
+	return;
+    }
+    $ccli = "\\NotCCLIed" if $copyright =~ /\bPublic Domain\b/;
+
+    print STDERR "$file:$.: key undefined for \"$title\".\n" unless $key;
+    print STDERR "$file:$.: copyright info undefined for \"$title\".\n" if $copyright eq "Unknown";
+    print STDERR "$file:$.: author undefined for \"$title\".\n" if $wandm eq "Unknown";
+#    print STDERR "$file:$.: scripture ref. undefined for \"$title\".\n" unless $sref;
+    print STDERR "$file:$.: CCLI status undefined for \"$title\".\n" unless $ccli;
+
+    if ($env) {
+	DoEnd($env);
+    }
+
+    print "% This file is machine generated.  Do not edit.\n";
+    print "% crd2sb $file\n";
+    print "% created on $date\n";
+    print "\\begin{song}{$title}{$key}\n";
+    print "  {$copyright}\n  {$wandm}\n  {$sref}\n  {$ccli}\n";
+    print "$lyrics";
+    print "\\end{song}\n";
+    Init();
+}
+
+sub DoNewSong
+{
+    EndSong();
+    Init();
+}
+
+sub DoSubTitle
+{
+    ($_) = @_;
+    # figure out if it's a copyright
+    if (s/\(C\)// + s/\bCopyright\b//) {
+	s/^\s+//;
+	s/\s+$//;
+	$copyright = $_;
+	return;
+    }
+    if (/Public Domain/) {
+	$copyright = $_;
+	return;
+    }
+    s/^W&M://;
+    s/^\s+//;
+    s/\s+$//;
+    $wandm = $_;
+}
+
+sub DoComment
+{
+    ($_) = @_;
+    print STDERR "$file:$.: > $_\n" if $debuglevel > 0;
+    if (($p) = /^tex:\s*(.*)/) {
+	$lyrics .= "$p\n";
+	return;
+    }
+    if (($p) = /^note:\s*(.*)/) {
+	$lyrics .= "\\SBMargNote{$p}\n";
+	return;
+    }
+    if (($p) = /^intro:\s*(.*)/) {
+	$p =~ s/#/\$\\sharp\$/g;
+	$p =~ s/b/\$\\flat\$/g;
+	$p =~ s/\|/\$|\$/g;
+	$lyrics .= "\\SBIntro{\\ChFont $p}\n";
+	return;
+    }
+    if (/^section:/) {
+	$nextenv = "SBSection";
+	return;
+    }
+    # figure out if there's a CCLI ref anywhere
+    $ccli = "\\CCLIed" if /\bccli\b/i;
+    # key setting
+    if (/^\s*key:\s*(.*)/) {
+	my($k) = $1;
+	if ($k !~ /^[A-G]\S*/) {
+	    print STDERR "$file:$.: invalid key $k\n";
+	}
+	$k =~ s/#/\$\\sharp\$/g;
+	$k =~ s/b/\$\\flat\$/g;
+	$key = $k;
+	return;
+    }
+    $sref = $1 if /^\s*sref:\s*(.*)/;
+}
+
+sub DoBegin
+{
+    my($myenv) = @_;
+    printf STDERR "$file:$.: missing env $env" if $env;
+    $env = $myenv;
+    $lyrics .= "\\begin{$env}\n";
+    $first = 1;
+}
+
+sub DoEnd
+{
+    print STDERR "$file:$.: mismatched quote\n" if $quote;
+    $quote = 0;
+    printf STDERR "$file:$.: missing env $env\n" unless ($env);
+    $lyrics .= "\\end{$env}\n";
+    $env = "";
+}
+
+unless (@ARGV) {
+    print "usage: crd2sb filename.crd [filename2.crd] ... [filenamen.crd]\n"
+}
+
+Init();
+foreach $file (@ARGV) {
+    ($base, $path, $type) = fileparse($file, '\.crd');
+    unless ($type) {
+	print STDERR "$file: not a Chordpro (*.crd) file\n";
+	next;
+    }
+    $outfile = "$base.tex";
+    print STDERR "#### $file -> $outfile ####\n"
+	if $debuglevel > 0;
+    unless (open(INFILE, $file)) {
+	print STDERR "$file: $!\n";
+	exit;
+    }
+    close(STDOUT);
+    unless (open(STDOUT, ">$outfile")) {
+	print STDERR "$outfile: $!\n";
+	exit;
+    }
+    while (<INFILE>) {
+	if (/^#\s+(.*)/) {
+	    DoComment($1);
+	    next;
+	}
+	next if /^#/;
+	# directive
+	if (m/^\s*{([^\}:]+)(:\s*([^\}]*))?}/) {
+	    # title
+	    if ($1 eq "title" || $1 eq "t") {
+		$title = $3; next;
+	    }
+	    if ($1 eq "subtitle" || $1 eq "st") {
+		DoSubTitle($3); next;
+	    }
+	    if ($1 eq "comment" || $1 eq "c") {
+		DoComment($3); next;
+	    }
+	    # new_song
+	    if ($1 eq "new_song" || $1 eq "ns") {
+		DoNewSong(); next;
+	    }
+	    if ($1 eq "start_of_chorus" || $1 eq "soc") {
+		DoBegin("SBChorus"); next;
+	    }
+	    if ($1 eq "end_of_chorus" || $1 eq "eoc") {
+		DoEnd("SBChorus"); next;
+	    }
+	    next;
+	}
+	if (/{/ || /}/) {
+	    print STDERR "$file:$.: unmatched brace\n";
+	}
+
+	# strip blank spaces and comments
+	s/\s+/ /;
+	s/^\s//;
+	s/\s$//;
+	s/&/\\&/;
+	unless ($_) {		# blank line
+	    DoEnd() if $env;
+	    next;
+	}
+	while (/"/) { # " 
+	       if ($quote) {
+		   $quote = 0 if (s/"/\'\'/); # " }
+	       }
+	       else {
+		   $quote = 1 if (s/"/\`\`/); # " }
+	       }
+	   }
+	# protect the parens in chords
+	s/(\[[^\[\]]*)\(/$1</g;
+	s/\)([^\[\]]*\])/>$1/g;
+	s/\(/{\\em /g;
+	s/\)/}/g;
+	tr/\<\>/\(\)/;
+
+	s/\|/\$|\$/g;
+	s/\[([^\[\]]*)\]-/\\Ch{$1}{\\SBem}/g;
+	s/\[([^\[\]]*)\]([A-Za-z0-9,;:.!"'`]+)/\\Ch{$1}{$2}/g; #'`
+	s/\[([^\[\]]*)\]/\\Ch{$1}{}/g;#}}
+	s/\.\.\./\\ldots{}/g;
+
+	unless ($env) {
+	    DoBegin($nextenv) unless $env;
+	    $nextenv = "SBVerse";
+	}
+	$lyrics .= "\n" if $env && !$first;
+	$first = 0;
+	$lyrics .= "$_\n";
+    }
+    DoNewSong();
+}

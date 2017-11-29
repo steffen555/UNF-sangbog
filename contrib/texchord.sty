@@ -1,0 +1,467 @@
+%%%
+%%% TeXChord.  Macros for typesetting guitar-chord diagrams.
+%%% Version 0.8.
+%%% 
+%%% (C) Copyright 1993 by Joel M. Hoffman <72700.402@compuserve.com>
+%%%
+%%%
+%%% Unlimited non-comercial use is hereby granted.  Any comercial use
+%%% requires permission from the author.  For information on how
+%%% to contact the author, see below.
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% This package defines macros for producing guitar-chord diagrams
+%%% with TeX.  In general, the command to produce a chord pattern
+%%% consists of three parts: the chord name, modifiers, and the
+%%% string ``chord.''  Upper-case letters are used for Major and
+%%% lower-case letter for minor.  Possible modifiers are ``s'' for
+%%% ``seven,'' ``sh'' for ``sharp,'' ``f'' for ``flat'' and ``S''
+%%% for ``major seven.'' When they are mixed, the incidentals
+%%% (sharp, flat) preceed the others.
+%%% 
+%%% So, for example, \Cchord is a simple C-major chord; \cshchord is
+%%% a c-sharp-minor chord; \DshSchord is a D-sharp-major-seven chord.
+%%% As of version 0.8, I have not entered all of the possible chord
+%%% patterns.  See the end of this file for examples of how to add
+%%% chords of your own.
+%%%
+%%% I have included the chord patterns I usually use; your
+%%% choices for some obscure chords may vary.  Again, you can add
+%%% your own chords by copying the examples at the end of this file.
+%%% 
+%%% I have included both sharps and flats for every chord, even
+%%% though some are seldom used (C-flat comes to mind).  As of
+%%% version 0.8, many chords are still missing.  Sorry.
+%%%
+%%% In addition to the chord macros themselves, the following
+%%% ``control'' commands are provided:
+%%% 
+%%% \bigchords          Use big chord patterns.
+%%% \smallchords        Use small chord patterns.
+%%% \raisedchords       Place chords over text at current location.
+%%% \textchords         Place chords in current text.
+%%% 
+%%% For example, if you wanted to discuss chords, you might say:
+%%% 
+%%% \smallchords\textchords This is how a C-chord is played:  \Cchord.
+%%% 
+%%% On the other hand, in music, you might use:
+%%% 
+%%% \bigchords\raisedchords \Dchord This is played with a D-chord.
+%%%
+%%% \bigchords\raisedchords is the default.
+%%%
+%%% I don't know how reliable the \raisedchords is.  You may have
+%%% to tweek the definition of \raisedchords at the end of this
+%%% file if you are not using 10pt text.
+%%%
+%%% Other dimentions you can freely change are \chordheight and
+%%% \chordwidth.  Be sure to do so both in the initialization and
+%%% in the definitions of \bigchords and \smallchords.  Also
+%%% change \extchordheight to match \chordheight.  Feel free to
+%%% change the fonts, too.
+%%%
+%%%
+%%% --> I would like to thank Merri Lovinger Arian, a long time friend
+%%% --> and my guitar teacher, without whom I would never have learned
+%%% --> the joy of guitar. 
+%%%
+%%%
+%%%
+%%% By version 1.0, this package will also have better provisions
+%%% for bar-chords; provisions for optionally printing the name of
+%%% the chord to the left of (instead of above) the diagram;
+%%% provisions for printing fret-numbers to the left of the
+%%% diagrams, instead of the hideously ugly extended patterns;
+%%% provisions for printing little x's and o's atop the chord
+%%% patterns to indicate which strings are sounded.  Also, the
+%%% code will be cleaned up and commented.  
+%%%
+%%% Other bugs include numerous spacing problems, most notably in
+%%% f-minor chords.
+%%%
+%%%
+%%% If you have suggestions, or bug-fixes, please let me know
+%%%
+%%%
+%%% You can reach me, the author of this package at:
+%%%
+%%% Internet:   Joel@wam.umd.edu -or- 72700.402@compuserve.com
+%%% Compuserve: 72700,402
+%%% USPSnet:    Joel Hoffman
+%%%             1703 Mt. Pisgah Le. #23
+%%%             Silver Spring, MD 20903
+%%%             USA
+%%%
+%%% Smile and be happy.  Like this:  o  o
+%%%                                    > 
+%%%                                  \__/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newdimen\chordwidth\chordwidth=.28in
+\newdimen\chordheight\chordheight=.3in
+\newdimen\extchordheight\extchordheight=.525in % 7/4 of \chordheight
+\newdimen\chordlinewidth\chordlinewidth=.3pt
+\newdimen\chordbaselinewidth\chordbaselinewidth=1pt
+\newdimen\chordraise\chordraise=2pt
+\font\chordmarkfont=cmsy8\def\chordchar{\char15}
+\font\chordnamefont=cmr12
+\font\chordnamesfont=cmr8
+\font\chordsymfont=cmmi8
+
+\newdimen\chordi\newdimen\chordj\newdimen\chordk
+\newcount\chordl
+
+\def\bigchords{\chordwidth=.28in\chordheight=.3in\extchordheight=.525in\chordlinewidth=.3pt\chordbaselinewidth=1pt\font\chordmarkfont=cmsy8\def\chordchar{\char15}\font\chordnamefont=cmr12\font\chordnamesfont=cmr8\font\chordsymfont=cmmi8\chordraise=3pt}
+
+%\def\smallchords{\chordwidth=.14in\chordheight=.15in\extchordheight=.2625in\chordlinewidth=.15pt\chordbaselinewidth=.5pt\font\chordmarkfont=cmsy5\font\chordnamefont=cmr6\chordraise=1.5pt}
+\def\smallchords{\chordwidth=.14in\chordheight=.15in\extchordheight=.2625in\chordlinewidth=.15pt\chordbaselinewidth=.5pt\font\chordmarkfont=cmr12 scaled \magstep1\def\chordchar{.}\font\chordnamefont=cmr6\font\chordnamesfont=cmr5\font\chordsymfont=cmmi5\chordraise=1.5pt}
+
+\bigchords
+
+\def\vchordrule{{\vrule height \chordheight width \chordlinewidth depth 0pt}}
+\def\extvchordrule{{\vrule height \extchordheight width \chordlinewidth depth 0pt}}
+\def\hchordrule{{\hrule height \chordlinewidth width \chordwidth depth 0pt}}
+\def\basechordrule{{\hrule height \chordbaselinewidth width \chordwidth
+                 depth 0pt}}
+\def\chordmark{{\chordmarkfont\chordchar}}
+
+
+
+
+\def\finger#1#2{%string, fret
+        \chordi=\chordwidth%
+        \divide\chordi by 5%
+        \chordl=#1\advance\chordl by 0%
+        \multiply\chordi by \chordl%
+        \chordj=\chordheight%
+        \divide\chordj by 4%
+        \chordk=.5\chordj%
+        \divide\chordk by 2%
+        \chordl=#2\advance\chordl by 1%
+        \multiply\chordj by \chordl%
+        \advance\chordj by \chordk%
+        \setbox0\hbox{\chordmark}%
+        \chordk=\wd0%
+        \multiply\chordk by 10%
+        \divide\chordk by 21  %=2.1. 2 doesn't seem to work.  Hmmm.%
+        \advance \chordi by -\chordk%
+        \chordk=\ht0%
+        \divide\chordk by 2%
+        \advance\chordj by -\chordk%
+%       \vskip\chordj\hbox{}\hskip\chordi\chordmark
+%       \hskip-\wd0\hskip-\chordi\vskip-\ht0\vskip-\chordj}
+        \lower\chordj\hbox{\hskip\chordi\chordmark}%
+        \hskip-\wd0\hskip-\chordi}
+        
+
+\def\craise#1#2{#1\raise 1ex\hbox{\chordnamesfont #2}}
+\def\minor#1{\craise{#1}{m}}
+\def\seven#1{\craise{#1}{7}}
+\def\Flat#1{\craise{#1}{{\chordsymfont\char91}}}
+\def\Sharp#1{\craise{#1}{{\chordsymfont\char93}}}
+\def\Flatm#1{\craise{#1}{{\chordsymfont\char91}m}}
+\def\Sharpm#1{\craise{#1}{{\chordsymfont\char93}m}}
+\def\minors#1{\craise{#1}{m7}}
+\def\Sharps#1{\craise{#1}{{\chordsymfont\char93}7}}
+\def\Flats#1{\craise{#1}{{\chordsymfont\char91}7}}
+\def\Flatms#1{\craise{#1}{{\chordsymfont\char91}m7}}
+\def\Sharpms#1{\craise{#1}{{\chordsymfont\char93}m7}}
+
+\def\chord#1{\hbox to 0pt{\smash{\offinterlineskip
+\raise\chordraise\hbox to 0pt{\hbox to \chordwidth{\chordnamefont\hss #1 \hss}\hss}%
+\vbox to 0pt{\hbox to 0pt{\hbox to \chordwidth{\vchordrule \hfil \vchordrule \hfil \vchordrule \hfil \vchordrule \hfil \vchordrule \hfil \vchordrule}\hss}\vss}\vbox to 0pt{\vbox to \chordheight{\basechordrule\vfil \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule}\vss}}\hss}}
+\def\emptychord{\chord{}}
+
+\def\extchord#1{\hbox to 0pt{\smash{\offinterlineskip
+\raise\chordraise\hbox to 0pt{\hbox to \chordwidth{\chordnamefont\hss #1 \hss}\hss}%
+\vbox to 0pt{\hbox to 0pt{\hbox to \chordwidth{\extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule}\hss}\vss}\vbox to 0pt{\vbox to \extchordheight{\basechordrule\vfil \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule}\vss}}\hss}}
+
+% Definition added by Christopher Rath (crath@cyberus.ca).  This macro left justifies 
+% the chord-name instead of pseudo centering it.
+\def\lextchord#1{\hbox to 0pt{\smash{\offinterlineskip
+\raise\chordraise\hbox to 0pt{\hbox to \chordwidth{\chordnamefont #1}}%
+\vbox to 0pt{\hbox to 0pt{\hbox to \chordwidth{\extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule}\hss}\vss}\vbox to 0pt{\vbox to \extchordheight{\basechordrule\vfil \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule}\vss}}\hss}}
+
+% Definition added by Christopher Rath (crath@cyberus.ca).  This macro prints a normal
+% chord picture, except that the top fret-mark is not heavy-weight and it picture 
+% prints the top fret-number beside the top fret-mark (this allows chords to be shown
+% that are played ``up the neck''.
+\def\upchord#1#2{\hbox to 0pt{\smash{\offinterlineskip
+\raise\chordraise\hbox to 0pt{\hbox to \chordwidth{\chordnamefont\hss #1 \hss}\hss}%
+\vbox to 0pt{\hbox to 0pt{\hbox to \chordwidth{\vchordrule \hfil \vchordrule \hfil \vchordrule \hfil \vchordrule \hfil \vchordrule \hfil \vchordrule}\hss}\vss}%
+\vbox to 0pt{\vskip1pt\hbox to 0pt{\hskip\chordwidth\hbox{\chordnamesfont ~#2}\hss}\vss}%
+\vbox to 0pt{\vbox to \chordheight{\vfil \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule}\vss}}\hss}}
+
+% Definition added by Christopher Rath (crath@cyberus.ca).  The same function as
+% \upchord, except this is for the \extchord.
+\def\upextchord#1#2{\hbox to 0pt{\smash{\offinterlineskip
+\raise\chordraise\hbox to 0pt{\hbox to \chordwidth{\chordnamefont\hss #1 \hss}\hss}%
+\vbox to 0pt{\hbox to 0pt{\hbox to \chordwidth{\extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule \hfil \extvchordrule}\hss}\vss}%
+\vbox to 0pt{\vskip1pt\hbox to 0pt{\hskip\chordwidth\hbox{\chordnamesfont ~#2}\hss}\vss}%
+\vbox to 0pt{\vbox to \extchordheight{\vfil \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule \vfil  \hchordrule}\vss}}\hss}}
+
+\def\anychord#1{\dochord{\offinterlineskip\relax #1}}
+\def\anyextchord#1{\doextchord{\offinterlineskip\relax #1}}
+
+%Ordinary major chords.
+\def\Afchord{\anychord{\chord{\Flat{A}}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{5}{3}}}
+\def\Achord{\anychord{\chord{A}\finger{2}{1}\finger{3}{1}\finger{4}{1}}}
+\def\Ashchord{\anychord{\chord{\Sharp{A}}\finger{0}{0}\finger{1}{0}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{2}{2}\finger{3}{2}\finger{4}{2}}}
+\def\Bfchord{\anychord{\chord{\Flat{B}}\finger{0}{0}\finger{1}{0}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{2}{2}\finger{3}{2}\finger{4}{2}}}
+\def\Bchord{\anychord{\chord{B}\finger{2}{3}\finger{3}{3}\finger{4}{3}\finger{5}{1}}}
+\def\Cfchord{\anychord{\chord{\Flat{C}}\finger{2}{3}\finger{3}{3}\finger{4}{3}\finger{5}{1}}}
+\def\Bshchord{\anychord{\chord{\Sharp{B}}\finger{1}{2}\finger{2}{1}\finger{4}{0}}}
+\def\Cchord{\anychord{\chord{C}\finger{1}{2}\finger{2}{1}\finger{4}{0}}}
+\def\Cshchord{\anychord{\chord{\Sharp{C}}\finger{1}{3}\finger{2}{2}\finger{3}{0}\finger{4}{0}\finger{4}{1}\finger{5}{0}}}
+\def\Dfchord{\anychord{\chord{\Flat{D}}\finger{1}{3}\finger{2}{2}\finger{3}{0}\finger{4}{0}\finger{4}{1}\finger{5}{0}}}
+\def\Dchord{\anychord{\chord{D}\finger{3}{1}\finger{4}{2}\finger{5}{1}}}
+\def\Dshchord{\anychord{\chord{\Sharp{D}}\finger{2}{0}\finger{3}{2}\finger{4}{3}\finger{5}{2}}}
+\def\Efchord{\anychord{\chord{\Flat{E}}\finger{2}{0}\finger{3}{2}\finger{4}{3}\finger{5}{2}}}
+\def\Echord{\anychord{\chord{E}\finger{1}{1}\finger{2}{1}\finger{3}{0}}}
+\def\Ffchord{\anychord{\chord{\Flat{F}}\finger{1}{1}\finger{2}{1}\finger{3}{0}}}
+\def\Eshchord{\anychord{\chord{\Sharp{E}}\finger{2}{2}\finger{3}{1}\finger{4}{0}\finger{5}{0}}}
+\def\Fchord{\anychord{\chord{F}\finger{2}{2}\finger{3}{1}\finger{4}{0}\finger{5}{0}}}
+\def\Fshchord{\anychord{\chord{\Sharp{F}}\finger{2}{3}\finger{3}{2}\finger{4}{1}\finger{5}{1}}}
+\def\Gfchord{\anychord{\chord{\Flat{G}}\finger{2}{3}\finger{3}{2}\finger{4}{1}\finger{5}{1}}}
+\def\Gchord{\anychord{\chord{G}\finger{0}{2}\finger{1}{1}\finger{5}{2}}}
+\def\Gshchord{\anychord{\chord{\Sharp{G}}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{5}{3}}}
+
+%minor chords
+\def\afchord{\anyextchord{\extchord{\Flatm{a}}\finger{0}{3}\finger{1}{3}\finger{2}{3}\finger{3}{3}\finger{4}{3}\finger{5}{3}\finger{1}{5}\finger{2}{5}}}
+\def\achord{\anychord{\chord{\minor{a}}\finger{2}{1}\finger{3}{1}\finger{4}{0}}}
+\def\ashchord{\anychord{\chord{\Sharpm{a}}\finger{0}{0}\finger{1}{0}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{2}{2}\finger{3}{2}\finger{4}{1}}}
+\def\bfchord{\anychord{\chord{\Flatm{b}}\finger{0}{0}\finger{1}{0}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{2}{2}\finger{3}{2}\finger{4}{1}}}
+\def\bchord{\anychord{\chord{\minor{b}}\finger{2}{3}\finger{3}{3}\finger{4}{2}\finger{5}{1}}}
+\def\cfchord{\anychord{\chord{\Flatm{c}}\finger{2}{3}\finger{3}{3}\finger{4}{2}\finger{5}{1}}}
+\def\bshchord{\anyextchord{\extchord{\Sharpm{b}}\finger{2}{4}\finger{3}{4}\finger{4}{3}\finger{5}{2}}}
+\def\cchord{\anyextchord{\extchord{\minor{c}}\finger{2}{4}\finger{3}{4}\finger{4}{3}\finger{5}{2}}}
+\def\cshchord{\anychord{\chord{\Sharpm{c}}\finger{2}{1}\finger{3}{0}\finger{4}{1}}}
+\def\dfchord{\anychord{\chord{\Flatm{d}}\finger{2}{1}\finger{3}{0}\finger{4}{1}}}
+\def\dchord{\anychord{\chord{\minor{d}}\finger{3}{1}\finger{4}{2}\finger{5}{0}}}
+\def\dshchord{\anychord{\chord{\Sharpm{d}}\finger{2}{3}\finger{3}{2}\finger{4}{3}\finger{5}{1}}}
+\def\efchord{\anychord{\chord{\Flatm{e}}\finger{2}{3}\finger{3}{2}\finger{4}{3}\finger{5}{1}}}
+\def\echord{\anychord{\chord{\minor{e}}\finger{1}{1}\finger{2}{1}}}
+\def\ffchord{\anychord{\chord{\Flatm{f}}\finger{1}{1}\finger{2}{1}}}
+\def\eshchord{\anychord{\chord{\Sharpm{e}}\finger{2}{2}\finger{3}{0}\finger{4}{0}\finger{5}{0}}}
+\def\fchord{\anychord{\chord{\minor{f}}\finger{2}{2}\finger{3}{0}\finger{4}{0}\finger{5}{0}}}
+\def\fshchord{\anychord{\chord{\Sharpm{f}}\finger{0}{1}\finger{1}{1}\finger{2}{1}\finger{3}{1}\finger{4}{1}\finger{5}{1}\finger{1}{3}\finger{2}{3}}}
+\def\gfchord{\anychord{\chord{\Flatm{g}}\finger{0}{1}\finger{1}{1}\finger{2}{1}\finger{3}{1}\finger{4}{1}\finger{5}{1}\finger{1}{3}\finger{2}{3}}}
+\def\gchord{\anyextchord{\extchord{\minor{g}}\finger{2}{4}\finger{3}{2}\finger{4}{2}\finger{5}{2}}}
+\def\gshchord{\anyextchord{\extchord{\Sharpm{g}}\finger{0}{3}\finger{1}{3}\finger{2}{3}\finger{3}{3}\finger{4}{3}\finger{5}{3}\finger{1}{5}\finger{2}{5}}}
+
+%Seventh chords (majors)
+\def\Afschord{\anychord{\chord{\Flats{A}}\finger{1}{2}\finger{2}{3}\finger{3}{0}\finger{4}{3}}}
+\def\Aschord{\anychord{\chord{\seven{A}}\finger{2}{1}\finger{4}{1}}}
+\def\Ashschord{\anychord{\chord{\Sharps{A}}\finger{0}{0}\finger{1}{0}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{2}{2}\finger{4}{2}}}
+\def\Bfschord{\anychord{\chord{\Flats{B}}\finger{0}{0}\finger{1}{0}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}\finger{2}{2}\finger{4}{2}}}
+\def\Bschord{\anychord{\chord{\seven{B}}\finger{1}{1}\finger{2}{0}\finger{3}{1}\finger{5}{1}}}
+\def\Cfschord{\anychord{\chord{\Flats{C}}\finger{1}{1}\finger{2}{0}\finger{3}{1}\finger{5}{1}}}
+\def\Bshschord{\anychord{\chord{\Sharps{B}}\finger{1}{2}\finger{2}{1}\finger{3}{2}\finger{4}{0}}}
+\def\Cschord{\anychord{\chord{\seven{C}}\finger{1}{2}\finger{2}{1}\finger{3}{2}\finger{4}{0}}}
+\def\Cshschord{\anychord{\chord{\Sharps{C}}\finger{2}{2}\finger{3}{3}\finger{4}{1}\finger{5}{3}}}
+\def\Dfschord{\anychord{\chord{\Flats{D}}\finger{2}{2}\finger{3}{3}\finger{4}{1}\finger{5}{3}}}
+\def\Dschord{\anychord{\chord{\seven{D}}\finger{3}{1}\finger{4}{0}\finger{5}{1}}}
+\def\Dshschord{\anychord{\chord{\Sharps{D}}\finger{2}{0}\finger{3}{2}\finger{4}{1}\finger{5}{2}}}
+\def\Efschord{\anychord{\chord{\Flats{E}}\finger{2}{0}\finger{3}{2}\finger{4}{1}\finger{5}{2}}}
+\def\Eschord{\anychord{\chord{\seven{E}}\finger{1}{1}\finger{3}{0}}}
+\def\Ffschord{\anychord{\chord{\Flats{F}}\finger{1}{1}\finger{3}{0}}}
+\def\Eshschord{\anyextchord{\extchord{\Sharps{E}}\finger{2}{2}\finger{3}{4}\finger{4}{5}\finger{5}{4}}}
+\def\Fschord{\anyextchord{\extchord{\seven{F}}\finger{2}{2}\finger{3}{4}\finger{4}{5}\finger{5}{4}}}
+\def\Fshschord{\anychord{\chord{\Sharps{F}}\finger{2}{3}\finger{3}{2}\finger{4}{1}}}
+\def\Gfschord{\anychord{\chord{\Flats{G}}\finger{2}{3}\finger{3}{2}\finger{4}{1}}}
+\def\Gschord{\anychord{\chord{\seven{G}}\finger{0}{2}\finger{1}{1}\finger{5}{0}}}
+\def\Gshschord{\anychord{\chord{\Sharps{G}}\finger{1}{2}\finger{2}{3}\finger{3}{0}\finger{4}{3}}}
+
+%seventh chords (minors)
+
+\def\afschord{\anychord{\chord{\Flatms{a}}\finger{2}{0}\finger{3}{0}\finger{5}{1}}}
+\def\aschord{\anychord{\chord{\minors{a}}\finger{2}{1}\finger{4}{0}}}
+\def\ashschord{\anychord{\chord{\Sharpms{a}}\finger{2}{2}\finger{3}{2}\finger{4}{1}\finger{5}{3}}}
+\def\bfschord{\anychord{\chord{\Flatms{b}}\finger{2}{2}\finger{3}{2}\finger{4}{1}\finger{5}{3}}}
+\def\bschord{\anychord{\chord{\minors{b}}\finger{0}{1}\finger{1}{1}\finger{2}{1}\finger{3}{1}\finger{4}{1}\finger{5}{1}\finger{2}{3}\finger{4}{2}}}
+\def\cfschord{\anychord{\chord{\Flatms{c}}\finger{0}{1}\finger{1}{1}\finger{2}{1}\finger{3}{1}\finger{4}{1}\finger{5}{1}\finger{2}{3}\finger{4}{2}}}
+\def\bshschord{\anychord{\chord{\Sharpms{b}}\finger{2}{0}\finger{3}{2}\finger{4}{0}\finger{5}{2}}}
+\def\cschord{\anychord{\chord{\minors{c}}\finger{2}{0}\finger{3}{2}\finger{4}{0}\finger{5}{2}}}
+\def\cshschord{\anychord{\chord{\Sharpms{c}}\finger{1}{1}\finger{2}{1}\finger{3}{0}\finger{4}{1}}}
+\def\dfschord{\anychord{\chord{\Flatms{d}}\finger{1}{1}\finger{2}{1}\finger{3}{0}\finger{4}{1}}}
+\def\dschord{\anychord{\chord{\minors{d}}\finger{3}{1}\finger{4}{0}\finger{5}{0}}}
+\def\dshschord{\anychord{\chord{\Sharpms{d}}\finger{2}{0}\finger{3}{2}\finger{4}{1}\finger{5}{1}}}
+\def\efschord{\anychord{\chord{\Flatms{e}}\finger{2}{0}\finger{3}{2}\finger{4}{1}\finger{5}{1}}}
+\def\eschord{\anychord{\chord{\minors{e}}\finger{1}{1}\finger{2}{1}\finger{4}{2}}}
+\def\ffschord{\anychord{\chord{\Flatms{f}}\finger{1}{1}\finger{2}{1}\finger{4}{2}}}
+\def\eshschord{\anychord{\chord{\Sharpms{e}}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}}}
+\def\fschord{\anychord{\chord{\minors{f}}\finger{2}{0}\finger{3}{0}\finger{4}{0}\finger{5}{0}}}
+\def\fshschord{\anychord{\chord{\Sharpms{f}}\finger{2}{1}\finger{3}{1}\finger{4}{1}\finger{5}{1}}}
+\def\gfschord{\anychord{\chord{\Flatms{g}}\finger{2}{1}\finger{3}{1}\finger{4}{1}\finger{5}{1}}}
+\def\gschord{\anychord{\chord{\minors{g}}\finger{1}{0}\finger{2}{2}\finger{4}{2}}}
+\def\gshschord{\anychord{\chord{\Sharpms{g}}\finger{2}{0}\finger{3}{0}\finger{5}{1}}}
+
+\def\textchords{\def\dochord##1{\leavevmode\raise\chordheight\hbox{##1}\hskip\chordwidth}}
+\def\raisedchords{\def\dochord##1{\leavevmode\raise10pt\hbox{\raise\chordheight\hbox{##1}}}\def\doextchord##1{\leavevmode\raise10pt\hbox{\raise\extchordheight\hbox{##1}}}}
+\raisedchords
+%%
+%%
+%%  Tue Mar 30 20:40:00 1993
+%%  
+%%  
+%%   To:         Christopher (C.J.)  Rath           (BNR)      Dept 4Y13   CAR
+%%  
+%%   From:       'joel@wam.umd.edu'                                (BNR400)
+%%  
+%%   Subject:    [ANNOUNCE] Guitar-chord-diagram macros for TeX (and LaTex)
+%%  
+%%   Attachment:  1) UNIX File: ORIGINAL.HEADER - 960 bytes  
+%%  
+%%  There are TWO files here:  test.tex, followed by texchord.tex.
+%%  
+%%  Look for the two --CUT HERE-- lines below.
+%%  
+%%  
+%%  Save the second file as texchord.tex, the first one as test.tex, and
+%%  run tex on test.tex.
+%%  
+%%  -------------------------------CUT HERE-------------------------------
+%%  %Test file for TeXChord.  (C) 1993 by Joel M. Hoffman
+%%  
+%%  \font\titfont=cmr17\narrower % Some fonts
+%%  \font\capfont=cmbx12 scaled \magstep1
+%%  \def\mycaption#1{\bigskip{\capfont #1}\nobreak}
+%%  \long\def\boxit#1{\vbox{\hrule\hbox{\vrule\kern3pt
+%%   \vbox{\kern3pt#1\kern3pt}\kern3pt\vrule}\hrule}}
+%%  \long\def\dboxit#1{\boxit{\vbox{\boxit{\hbox{#1}}}}}
+%%  
+%%  
+%%  
+%%  \input texchord             % Include the macros.
+%%  \textchords\smallchords     % Put chords in the text; use small chords.
+%%  
+%%  \centerline{\dboxit{\vbox{\hbox{\titfont \TeX Chord Demonstration}
+%%  \hbox{Copyright 1993 by Joel M.\ Hoffman}}}}
+%%  \bigskip
+%%  \bigskip\hrule\bigskip\bigskip
+%%  
+%%  This is the size of a small C-chord:  \Cchord.
+%%  \bigchords 
+%%  This is the size of a big C-chord: \Cchord.
+%%  
+%%  \bigskip\hrule\bigskip\bigskip
+%%  
+%%  
+%%  \raisedchords\advance\baselineskip by 50pt
+%%  \def\dummytext{\leavevmode\kern.6 true in}
+%%  
+%%  \bigchords
+%%  
+%%  \mycaption{Major chords:}
+%%  
+%%  \Achord \dummytext
+%%  \Bchord \dummytext
+%%  \Cchord \dummytext
+%%  \Dchord \dummytext
+%%  \Echord \dummytext
+%%  \Fchord \dummytext
+%%  \Gchord \dummytext
+%%  
+%%  \Ashchord \dummytext
+%%  \Bshchord \dummytext
+%%  \Cshchord \dummytext
+%%  \Dshchord \dummytext
+%%  \Eshchord \dummytext
+%%  \Fshchord \dummytext
+%%  \Gshchord \dummytext
+%%  
+%%  \Afchord \dummytext
+%%  \Bfchord \dummytext
+%%  \Cfchord \dummytext
+%%  \Dfchord \dummytext
+%%  \Efchord \dummytext
+%%  \Ffchord \dummytext
+%%  \Gfchord \dummytext
+%%  
+%%  \mycaption{Minor chords:}
+%%  
+%%  \achord \dummytext
+%%  \bchord \dummytext
+%%  \cchord \dummytext
+%%  \dchord \dummytext
+%%  \echord \dummytext
+%%  \fchord \dummytext
+%%  \gchord \dummytext
+%%  
+%%  \ashchord \dummytext
+%%  \bshchord \dummytext
+%%  \cshchord \dummytext
+%%  \dshchord \dummytext
+%%  \eshchord \dummytext
+%%  \fshchord \dummytext
+%%  \gshchord \dummytext
+%%  
+%%  \afchord \dummytext
+%%  \bfchord \dummytext
+%%  \cfchord \dummytext
+%%  \dfchord \dummytext
+%%  \efchord \dummytext
+%%  \ffchord \dummytext
+%%  \gfchord \dummytext
+%%  
+%%  \mycaption{Seventh chords (Major):}
+%%  
+%%  \Cschord \dummytext
+%%  \Dschord \dummytext
+%%  \Eschord \dummytext
+%%  \Fschord \dummytext
+%%  \Gschord \dummytext
+%%  \Aschord \dummytext
+%%  \Bschord \dummytext
+%%  
+%%  \Cfschord \dummytext
+%%  \Dfschord \dummytext
+%%  \Efschord \dummytext
+%%  \Ffschord \dummytext
+%%  \Gfschord \dummytext
+%%  \Afschord \dummytext
+%%  \Bfschord \dummytext
+%%  
+%%  \Cshschord \dummytext
+%%  \Dshschord \dummytext
+%%  \Eshschord \dummytext
+%%  \Fshschord \dummytext
+%%  \Gshschord \dummytext
+%%  \Ashschord \dummytext
+%%  \Bshschord \dummytext
+%%  
+%%  \mycaption{Seventh chords (Minor):}
+%%  
+%%  
+%%  \aschord \dummytext
+%%  \bschord \dummytext
+%%  \cschord \dummytext
+%%  \dschord \dummytext
+%%  \eschord \dummytext
+%%  \fschord \dummytext
+%%  \gschord \dummytext
+%%  
+%%  \afschord \dummytext
+%%  \bfschord \dummytext
+%%  \cfschord \dummytext
+%%  \dfschord \dummytext
+%%  \efschord \dummytext
+%%  \ffschord \dummytext
+%%  \gfschord \dummytext
+%%  
+%%  \ashschord \dummytext
+%%  \bshschord \dummytext
+%%  \cshschord \dummytext
+%%  \dshschord \dummytext
+%%  \eshschord \dummytext
+%%  \fshschord \dummytext
+%%  \gshschord \dummytext
+%%  
+%%  
+%%  \end

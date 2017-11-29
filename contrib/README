@@ -1,0 +1,35 @@
+@(#)$Id: README,v 1.7 2003/08/31 03:23:59 christopher Exp $
+
+This directory contains user contributed macros and programs intended/suitable
+for use with the LaTeX SongBook Style.
+
+Content List (in alphabetic order):
+
+  CarolBook - a songbook.sty formatted book containing words for all the
+    Christmas songs I've been able to find where the words are now in the
+    public domain.  PDF versions of the file are included for quick
+    and easy use.
+
+  crd2sb - a perl script which converts Chord files into Songbook files.
+    Contributed by Abel Chow <abel@g2networks.com>.  A postscript formatter for
+    Chord songs can be ftp'ed from:
+    ftp://ftp.uu.net/doc/music/guitar/resources/misc/CHORD/
+
+  modulate - a perl script for modulating a song from one key to another.
+    Contributed by Christopher Rath <crath@cyberus.ca>.
+
+  texchord.sty - LaTeX macros for printing guitar fingering charts.
+    Contributed by Joel M. Hoffman <joel@wam.umd.edu>.  Note, this style is NO
+    LONGER actively supported by Joel.
+
+
+
+
+
+
+Local Variables: 
+        mode:        indented-text-fill 
+        fill-column: 79 
+End: 
+
+
