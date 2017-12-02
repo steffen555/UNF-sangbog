@@ -1,19 +1,22 @@
 \begin{song}{En elefant kom marcherende}
   {} % Bruges ikke, lad stå blank
-  {Melodi} % Titel, Kunstner - eks.: "Jutlandia, Kim Larsen". Hvis sangen er på sin egen melodi, brug da \SBOrgMel.
-  {Forfatter} % Navnet på forfatteren. Undlad kaldenavne. Brug gerne TBF. Brug "&" frem for "og". Hvis forfatter er ukendt, lad da stå tom.
-  {Anledning og år} % Eks. "Fysikrevy, 2010" eller "2010"
+  {\SBOrgMel} % Titel, Kunstner - eks.: "Jutlandia, Kim Larsen". Hvis sangen er på sin egen melodi, brug da \SBOrgMel.
+  {} % Navnet på forfatteren. Undlad kaldenavne. Brug gerne TBF. Brug "&" frem for "og". Hvis forfatter er ukendt, lad da stå tom.
+  {} % Eks. "Fysikrevy, 2010" eller "2010"
   {\NotCCLIed} % Lad stå som den er
 
   \begin{SBVerse}
-    % Skriv vers her
+    Én elefant kom marcherende\\
+    Hen ad edderkoppens fine spind,\\
+    Fandt at vejen var så int'ressant\\
+    At den byder op endnu en elefant.
   \end{SBVerse}
+  \renewcommand{\theSBVerseCnt}{$n>0$}
 
-  \begin{SBChorus}
-    % Skriv omkvæd her
-  \end{SBChorus}
-
-  \begin{SBSection*}
-    % Skriv sektioner her. Hvis du ønsker lidt mellemrum for at give luft i et langt afsnit el.lign., brug da \\\medskip
-  \end{SBSection*}
+  \begin{SBVerse}
+    $2^n$ elefanter kom marcherende\\
+    Hen ad edderkoppens fine spind,\\
+    Fandt at vejen var så int'ressant\\
+    At de byder op endnu en elefant \emph{hver!}.
+  \end{SBVerse}
 \end{song}
