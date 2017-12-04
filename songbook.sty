@@ -964,7 +964,7 @@ environment's documentation}
     \renewcommand{\LeftMarginSBVerse}  {\LeftMarginSBChorus}
   \fi
   \begin{center}
-    \needspace{4\baselineskip}
+    \needspace{0.5\textheight}
     \STitle[N]{\theSongTitle}{#3}\\
     \vspace{-.5ex}
     \SBMel[N]{#4}{#7}\\
@@ -1027,6 +1027,7 @@ environment's documentation}
         \titleContents{\theXlatnTitle}{\theSongKey}%
         %
         \begin{center}
+          \needspace{4\baselineskip}
           \STitle[N]{\theXlatnTitle}{\theSongKey}\\
           \SBMel[N]{\theSongCopyRt}{\theSongLicense}\\
           \if\nil{#2}%
