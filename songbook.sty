@@ -1026,8 +1026,8 @@ environment's documentation}
         \titleIndex{\theXlatnTitle}{\theSBSongCnt}%
         \titleContents{\theXlatnTitle}{\theSongKey}%
         %
+        \needspace{12\baselineskip}
         \begin{center}
-          \needspace{4\baselineskip}
           \STitle[N]{\theXlatnTitle}{\theSongKey}\\
           \SBMel[N]{\theSongCopyRt}{\theSongLicense}\\
           \if\nil{#2}%
@@ -1163,6 +1163,7 @@ environment's documentation}
   \fi\fi\fi}
 
 \newenvironment{SBVerse}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \addtocounter{SBVerseCnt}{1}%
@@ -1180,6 +1181,7 @@ environment's documentation}
  \SpaceAfterVerse}
 
 \newenvironment{SBVerse*}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \begin{list}{{\SBVerseNumberFont }}
@@ -1195,6 +1197,7 @@ environment's documentation}
  \SpaceAfterVerse}
 
 \newenvironment{SBSection}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \addtocounter{SBSectionCnt}{1}%
@@ -1212,6 +1215,7 @@ environment's documentation}
  \SpaceAfterSection}
 
 \newenvironment{SBSection*}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \begin{list}{{\SBSectionNumberFont }}
@@ -1227,6 +1231,7 @@ environment's documentation}
  \SpaceAfterSection}
 
 \newenvironment{SBChorus}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \SBChorusMarkright{\SBChorusTag}
@@ -1244,6 +1249,7 @@ environment's documentation}
 }
 
 \newenvironment{SBChorus*}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \begin{list}{{\SBChorusTagFont }}
@@ -1260,6 +1266,7 @@ environment's documentation}
 
 %%%
 \newenvironment{SBOpGroup}{%
+  \needspace{4\baselineskip}
   \sbSetsbBaselineSkipAmt%
   \bgroup%
   \begin{list}{\hbox{}}
