@@ -881,6 +881,7 @@ environment's documentation}
     \ifWordsOnly\relax\else{\STitleKeyFont\ [{\sbChord#3\relax}]}\fi%
   \if#1Y\end{center}\fi
   \STitleMarkboth{#2}{\relax}%
+  \addcontentsline{toc}{section}{\protect\numberline{\theSBSongCnt} #2}%
   }
 
 \newenvironment{song}[7][YF]{                   % Comment markers to negate
