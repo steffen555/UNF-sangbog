@@ -95,6 +95,7 @@
 %%\usepackage[overhead]{songbook}               %% Overhead Transparency edition.
 \usepackage{titletoc}
 \usepackage{tket}  % Draws "TÅGEKAMMERET" correctly
+\usepackage{lipsum}
 
 
 
@@ -236,10 +237,21 @@
 % Uncomment "\maketitle" statement to make a title page.
 %%%
 \maketitle
-\mainmatter
-\ifWordBk
-  \twocolumn
-\fi
+% \mainmatter
+% \ifWordBk
+%   \twocolumn
+% \fi
+
+
+%%% Kolofon
+\thispagestyle{empty}
+\lipsum[1]
+\par\vspace*{\fill}
+\lipsum[2]
+
+
+% \tableofcontents
+
 %%%
 % Turn on and define fancy page heading/footing definition.
 %%%
@@ -278,13 +290,11 @@
 \else
   \fancyfoot[CE,CO]{\CFootFont}
 \fi
-\fancyfoot[RE,LO]{\RFootFont TODO: Et eller andet smart kan stå her}
-
+\fancyfoot[RE,LO]{\RFootFont Synges på eget ansvar}
 
 %%%
 % Songbook begins.
 %%%
-
 \onecolumn
 \SBChapter{Os mod de andre}
 \twocolumn
@@ -410,6 +420,27 @@
 
 % \input{songs/original_church_songs.tex}
 
+
+\clearpage
+\font\myTinySF=cmss8    at  8pt
+\font\myHugeSF=cmssbx10 at 25pt
+\newcommand{\CpyRtInfoFont}{\tiny\myTinySF}
+\newcommand{\myTitleFont}{\Huge\myHugeSF}
+\newcommand{\mySubTitleFont}{\large\sf}
+\renewcommand{\indexspace}{\medskip}
+
+{\parindent 8pt
+  {\myTitleFont Index}}\par
+\vskip 5pt
+\renewcommand{\SBThechapter}{Index}
+% {\parindent 20pt
+%   {\mySubTitleFont --- with first lines in italic ---}}
+% \vskip 20pt
+\renewcommand{\item}{\par\hangindent=40pt}
+\renewcommand{\subitem}{\par\hangindent=40pt \hspace*{20pt}}
+\renewcommand{\subsubitem}{\par\hangindent=40pt \hspace*{30pt}}
+
+\input{unf-sangbog.tdx}
 
 \end{document}
 \bye
