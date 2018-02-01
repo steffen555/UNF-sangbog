@@ -1,0 +1,499 @@
+% [Emacs] Time-stamp: <2017-03-18 15:54:32 neic>
+% File: tket.sty
+% Current version: 3.2
+% Current maintainer: Mathias Dannesbo <FUHI11@TAAGEKAMMERET.dk>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tket}
+  [2017/03/18 v3.2: Various TAAGEKAMMER related macros]
+
+% dollar     tegnet brugt som S i KASS, default \$
+% epsilon    tegnet brugt som e i RemToR, default \ensuremath{\epsilon}
+% gf         speciel værdi, referenceår for TKprefix
+% eksponent  boolean: hvorvidt eksponenter produceret af \TKprefix
+%              skal være hævede (vha $^5$) eller ej; standard true
+% cermC      C'et i \CERM, standard C
+% vcC        C'et i \VC, standard C
+% C          Meta-key til at sætte begge de to foregående
+% ikonh      Ikonhøjde, standard 1em.
+% koelleKASS boolean: hvorvidt Ludo-piktogrammet \ikonKASS skal være
+%              afhængigt af referenceåret: Hvis ja (standard) får man
+%              køllerne når året er før 2014 hvor den første INKA blev
+%              valgt; hvis nej får man altid kuglerammen
+
+% For parsing options, and to implement \TKsetup
+\RequirePackage{xkeyval}
+
+% etoolbox provides some nifty shortcuts
+\RequirePackage{etoolbox}
+
+% These two packages are required for the functionality of the package
+% itself (as opposed to its implementation). graphicx is used both to
+% rotate the letters of \TKET, and for the inclusion of pictograms.
+\RequirePackage{xspace}
+\RequirePackage{graphicx}
+
+% cermC and vcC defaults to complex C as of november 2014.
+\RequirePackage{amsfonts}
+
+%%% Internal macros
+% Info, warnings, errors
+\newcommand*{\tket@info}{%
+  \PackageInfo{tket}}
+\newcommand*{\tket@warn}{%
+  \PackageWarning{tket}}
+\newcommand*{\tket@warnNL}{%
+  \PackageWarningNoLine{tket}}
+\newcommand*{\tket@error}{%
+  \PackageError{tket}}
+
+
+% Test that various container macros are available. They are all
+% overwritten later.
+\newcommand*{\tket@dollar}{}
+\newcommand*{\tket@epsilon}{}
+\newcommand*{\tket@iconheight}{} 
+\newcommand*{\tket@reference}{}
+\newcommand*{\tket@heuristic}{}
+\newcommand*{\tket@cermC}{}
+\newcommand*{\tket@vcC}{}
+
+%%%%% The user commands
+
+% We \provide these rather than \new them, in order to allow a user to
+% make his own definition first.
+\providerobustcmd*{\TK}   {\mbox{\tket@block@TK}\xspace}
+\providerobustcmd*{\TKET} {\mbox{\tket@block@TK\tket@block@ET}\xspace}
+\providerobustcmd*{\TKETS}{\mbox{\tket@block@TK\tket@block@ET\tket@block@S}\xspace}
+\providerobustcmd*{\TKETs}{\mbox{\tket@block@TK\tket@block@ET\tket@block@s}\xspace}
+\providerobustcmd*{\TKAA}   {\mbox{\tket@block@TKAA}\xspace}
+\providerobustcmd*{\TKETAA} {\mbox{\tket@block@TKAA\tket@block@ET}\xspace}
+\providerobustcmd*{\TKETSAA}{\mbox{\tket@block@TKAA\tket@block@ET\tket@block@S}\xspace}
+\providerobustcmd*{\TKETsAA}{\mbox{\tket@block@TKAA\tket@block@ET\tket@block@s}\xspace}
+
+\newcommand*{\tket@urlpre}{www.}
+\newcommand*{\tket@urltld}{.dk}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{% hyperref loaded
+    \providecommand*{\TKpdf}{\texorpdfstring{\TK}{T\AA GEKAMMER\xspace}}
+    \providecommand*{\TKETpdf}{\texorpdfstring{\TKET}{T\AA GEKAMMERET\xspace}}
+    \providecommand*{\TKETspdf}{\texorpdfstring{\TKETs}{T\AA GEKAMMERETs\xspace}}
+    \providecommand*{\TKETSpdf}{\texorpdfstring{\TKETS}{T\AA GEKAMMERETS\xspace}}
+    % 
+    \providecommand*{\TKAApdf}{\texorpdfstring{\TKAA}{TAAGEKAMMER\xspace}}
+    \providecommand*{\TKETAApdf}{\texorpdfstring{\TKETAA}{TAAGEKAMMERET\xspace}}
+    \providecommand*{\TKETsAApdf}{\texorpdfstring{\TKETsAA}{TAAGEKAMMERETs\xspace}}
+    \providecommand*{\TKETSAApdf}{\texorpdfstring{\TKETSAA}{TAAGEKAMMERETS\xspace}}
+    %
+    \providecommand*{\RemToRpdf}{\texorpdfstring{\RemToR}{%
+        R\ifHy@unicode\textepsilon\else e\fi mToR\xspace}}
+    \providecommand*{\KASSpdf}{\texorpdfstring{\KASS}{KA\$\$\xspace}}
+    \providecommand*{\CERMpdf}{\texorpdfstring{\CERM}{CERM\xspace}}
+    \providecommand*{\VCpdf}{\texorpdfstring{\VC}{VC\xspace}}
+    %
+    \providecommand*{\TKurl}{%
+      \href{http://\tket@urlpre TAAGEKAMMERET\tket@urltld}%
+           {\tket@urlpre\TKETAA\tket@urltld}\xspace}
+    \providecommand*{\TKurlpdf}{%
+      \texorpdfstring{\TKurl}{\tket@urlpre TAAGEKAMMERET\tket@urltld\xspace}}
+
+    \providecommand*{\ikonFORMpdf}{\texorpdfstring{\ikonFORM}{FORM\xspace}}
+    \providecommand*{\ikonNFpdf}  {\texorpdfstring{\ikonNF}  {NF\xspace}}
+    \providecommand*{\ikonCERMpdf}{\texorpdfstring{\ikonCERM}{CERM\xspace}}
+    \providecommand*{\ikonVCpdf}  {\texorpdfstring{\ikonVC}  {VC\xspace}}
+    \providecommand*{\ikonSEKRpdf}{\texorpdfstring{\ikonSEKR}{SEKR\xspace}}
+    \providecommand*{\ikonPRpdf}  {\texorpdfstring{\ikonPR}  {PR\xspace}}
+    \providecommand*{\ikonKASSpdf}{\texorpdfstring{\ikonKASS}{KASS\xspace}}
+    \providecommand*{\ikonINKApdf}{\texorpdfstring{\ikonINKA}{INKA\xspace}}
+    \providecommand*{\ikonFUpdf}  {\texorpdfstring{\ikonFU}  {FU\xspace}}
+
+  }{% hyperref not loaded
+    \providecommand*{\TKurl}{\mbox{\tket@urlpre\TKETAA\tket@urltld}\xspace}
+  }
+}
+
+
+% This is, from version 2.0, pretty simple:
+\providecommand*{\KASS}{KA\tket@dollar\tket@dollar\xspace}
+
+% \RemToR could be equally simply, but we can steal some ideas from
+% the \LaTeXe macro from source2e and make it a little more
+% DWIMmy. First of all, we can ensure that the epsilon (or whatever
+% math is used) is also bold if the surroundings are bold: We test if
+% the first character of \f@series is a `b'. Also, if the user has set
+% \mathsurround to something positive, we need to remove that
+% additional spacing. LaTeX provides \m@th for that very purpose. We
+% also \mbox the entire thing, to prevent hyphenation, and to keep the
+% changes local.
+\providecommand*{\RemToR}{\mbox{\m@th% kill \mathsurround
+    \if b\expandafter\@car\f@series\@nil \boldmath\fi
+    R\tket@epsilon mToR}\xspace}
+
+
+% These are new. Somebody wants them...
+\providecommand*{\CERM}{\tket@cermC ERM\xspace}
+\providecommand*{\VC}{V\tket@vcC\xspace}
+
+
+% Pictograms, ludo version
+
+\newrobustcmd*{\ikonFORM}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonFORM}\xspace}
+\newrobustcmd*{\ikonNF}  {\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonNF}\xspace}
+\newrobustcmd*{\ikonCERM}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonCERM}\xspace}
+\newrobustcmd*{\ikonVC}  {\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonVC}\xspace}
+\newrobustcmd*{\ikonSEKR}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonSEKR}\xspace}
+\newrobustcmd*{\ikonPR}  {\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonPR}\xspace}
+\newrobustcmd*{\ikonKASS}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{\tket@ikonKASS}\xspace}
+\newrobustcmd*{\ikonINKA}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonINKA}\xspace}
+\newrobustcmd*{\ikonFU}  {\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonFU}\xspace}
+
+% The option koelleKASS governs the icon for KASS depending on the
+% reference year, but users may wish to use either icon explicitly,
+% most likely in combination with \TKprefix.
+\newrobustcmd*{\ikonKASSkoeller}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonINKA}\xspace}
+\newrobustcmd*{\ikonKASSkugler}{\includegraphics[height=\dimexpr \tket@iconheight\relax]{ikonKASS}\xspace}
+
+% Optional arguments suck! Macros with optional arguments are too
+% fragile (and prevent "full expandability"). So from v2, \TKprefix
+% does not take an optional argument. You need to
+% \TKsetup{refyear=1996} or \TKsetyear{1996} explicitly before the
+% call to \TKprefix if you need to use 1996 as reference year. Setting
+% the refyear respects TeX groups, so you can wrap the code in {} to
+% keep the definition local.
+%
+% Added complication: Inside \href, we cannot throw a
+% \PackageError. Furthermore, it is quite possible that someone wants
+%
+%   \href{mailto:\TKprefix{02}KASS@...}{\TKprefix{02}KASS@...}
+%
+% with the printed argument using an exponent. If the exponent option
+% is on, the email address would end up containing $^{7}$, which is
+% not what we want. Turning off the exponent option before the href
+% solves this problem, but then there's no way to get the printed
+% version to use the exponent notation.
+%
+% We can fix this by using a heuristic to find out if we're inside the
+% first argument of a \href: If the catcode of the percent character
+% is anything but 14, something fishy is going on.
+
+\newcommand*{\TKprefix}{%
+  \ifnum\catcode`\%=14 %
+    \expandafter\TKprefix@normal
+  \else
+    \expandafter\TKprefix@href
+  \fi
+}
+
+% This is truly a hack! We create a macro `\TKprefix ' (note the space
+% at the end), whose replacement text is a call of an undefined macro
+% containing lots of spaces. This is (ab)used to yield a sensible
+% error message when an invalid argument to `\TKprefix' is encountered
+% inside a \href. The character count has been carefully chosen so
+% that the output will be
+%
+%%%% \TKprefix  ...only takes two and four digit years
+\begingroup
+\catcode`\ =11\relax
+\csgdef{TKprefix }{%
+  \   only takes two and four digit years%
+}
+\endgroup
+
+\newcommand*{\TKprefix@href}[1]{%
+  \ifnum\numexpr#1>1955 % absolute, four-digit year
+    \ifnum\numexpr\tket@reference - (#1)<0 % future, K+
+      K%
+      \ifnum\numexpr\tket@reference - (#1)=-1 % just K
+      \else % K^n
+        \number\numexpr#1-\tket@reference\relax%
+      \fi % /K branch
+    \else % present or past; the zero case gives empty replacement:
+      \ifcase\numexpr\tket@reference - (#1)\relax\or G\or B\or O\or TO%
+      \else % really old people...
+        T\number\numexpr\tket@reference - (#1) - 3\relax O%
+      \fi % /T^nO
+    \fi % /four-digit branch
+  \else % two-digit, hopefully
+    \ifnum\numexpr#1>99 % NO WAY
+      \csuse{TKprefix }%
+    \else % OK, between 0 and 99 (or negative, but we don't test that)
+      \ifnum\numexpr#1>55 % 19xy
+        \ifnum\numexpr\tket@reference - 1900 - (#1) <0 % future, K+
+          K%
+          \ifnum\numexpr\tket@reference - 1900 - (#1)=-1 % just K
+          \else % K^n
+            \number\numexpr1900+(#1)-\tket@reference\relax
+          \fi % /K branch
+        \else % present or past; the zero case gives empty replacement:
+          \ifcase\numexpr\tket@reference - 1900 - (#1)\relax\or G\or B\or O\or TO%
+          \else % really old people...
+            T\number\numexpr\tket@reference - (#1) - 1903\relax O%
+          \fi % /T^nO
+        \fi % /19xy branch
+      \else % 20xy
+        \ifnum\numexpr\tket@reference - 2000 - (#1) <0 % future, K+
+          K%
+          \ifnum\numexpr\tket@reference - 2000 - (#1)=-1 % just K
+          \else % K^n
+            \number\numexpr2000+(#1)-\tket@reference\relax%
+          \fi % /K branch
+        \else % present or past; the zero case gives empty replacement:
+          \ifcase\numexpr\tket@reference - 2000 - (#1)\relax\or G\or B\or O\or TO%
+          \else % really old people...
+            T\number\numexpr\tket@reference - (#1) - 2003\relax O%
+          \fi % /T^nO
+        \fi % /20xy branch      
+      \fi
+    \fi
+  \fi
+}
+
+\newcommand*{\TKprefix@normal}[1]{%
+  \ifnum\numexpr#1>1955 % absolute, four-digit year
+    \ifnum\numexpr\tket@reference - (#1)<0 % future, K+
+      K%
+      \ifnum\numexpr\tket@reference - (#1)=-1 % just K
+      \else % K^n
+        \iftoggle{tket@eksponent}%
+          {$^{\number\numexpr#1-\tket@reference\relax}$}%
+          {\number\numexpr#1-\tket@reference\relax}%
+      \fi % /K branch
+    \else % present or past; the zero case gives empty replacement:
+      \ifcase\numexpr\tket@reference - (#1)\relax\or G\or B\or O\or TO%
+      \else % really old people...
+        T\iftoggle{tket@eksponent}%
+          {$^{\number\numexpr\tket@reference - (#1) - 3\relax}$}%
+          {\number\numexpr\tket@reference - (#1) - 3\relax}O%
+      \fi % /T^nO
+    \fi % /four-digit branch
+  \else % two-digit, hopefully
+    \ifnum\numexpr#1>99 % NO WAY
+      \tket@error{Argumentet `#1' ugyldigt. Skal vaere to eller fire cifre}%
+        {Et firecifret tal skal vaere > 1955}%
+    \else % OK, between 0 and 99 (or negative, but we don't test that)
+      \ifnum\numexpr#1>55 % 19xy
+        \ifnum\numexpr\tket@reference - 1900 - (#1) <0 % future, K+
+          K%
+          \ifnum\numexpr\tket@reference - 1900 - (#1)=-1 % just K
+          \else % K^n
+            \iftoggle{tket@eksponent}%
+              {$^{\number\numexpr1900+(#1)-\tket@reference\relax}$}%
+              {\number\numexpr1900+(#1)-\tket@reference\relax}%
+          \fi % /K branch
+        \else % present or past; the zero case gives empty replacement:
+          \ifcase\numexpr\tket@reference - 1900 - (#1)\relax\or G\or B\or O\or TO%
+          \else % really old people...
+            T\iftoggle{tket@eksponent}%
+              {$^{\number\numexpr\tket@reference - (#1) - 1903\relax}$}%
+              {\number\numexpr\tket@reference - (#1) - 1903\relax}O%
+          \fi % /T^nO
+        \fi % /19xy branch
+      \else % 20xy
+        \ifnum\numexpr\tket@reference - 2000 - (#1) <0 % future, K+
+          K%
+          \ifnum\numexpr\tket@reference - 2000 - (#1)=-1 % just K
+          \else % K^n
+            \iftoggle{tket@eksponent}%
+              {$^{\number\numexpr2000+(#1)-\tket@reference\relax}$}%
+              {\number\numexpr2000+(#1)-\tket@reference\relax}%
+          \fi % /K branch
+        \else % present or past; the zero case gives empty replacement:
+          \ifcase\numexpr\tket@reference - 2000 - (#1)\relax\or G\or B\or O\or TO%
+          \else % really old people...
+            T\iftoggle{tket@eksponent}%
+              {$^{\number\numexpr\tket@reference - (#1) - 2003\relax}$}%
+              {\number\numexpr\tket@reference - (#1) - 2003\relax}O%
+          \fi % /T^nO
+        \fi % /20xy branch      
+      \fi
+    \fi
+  \fi
+}
+
+% RV, 2010-11-03: The following comes from the "ancient" tket.sty. It
+% is, apparently, a home-made poor-man's bold. I have no idea what
+% 'rbl' stands for (but rbll is probably for "rbl length").
+\newlength\tket@rbll
+\def\tket@rbl#1#2{%
+  \settowidth{\tket@rbll}{\hbox{#2}}%
+  #2\kern-#1\tket@rbll#2}
+
+% Building blocks. The first two are identical except that one uses Å,
+% the other AA
+\newcommand*{\tket@block@TK}{\ttfamily
+  \raisebox{-0.4pt}{T}%
+  \tket@rbl{.95}{\AA}G%
+  \rotatebox{-8}{E}%
+  \raisebox{-0.6pt}{K}%
+  $\,\!$%
+  \raisebox{0.2pt}{\tket@rbl{.94}{A}}%
+  $\,\!$%
+  \raisebox{-0.6pt}{M}%
+  \rotatebox{8}{\tket@rbl{.94}{M}}%
+  ER\hspace{1pt}}
+
+\newcommand*{\tket@block@TKAA}{\ttfamily
+  \raisebox{-0.4pt}{T}%
+  \tket@rbl{.95}{A}\raisebox{0.1pt}{A}G%
+  \rotatebox{-8}{E}%
+  \raisebox{-0.6pt}{K}%
+  $\,\!$%
+  \raisebox{0.2pt}{\tket@rbl{.94}{A}}%
+  $\,\!$%
+  \raisebox{-0.6pt}{M}%
+  \rotatebox{8}{\tket@rbl{.94}{M}}%
+  ER\hspace{1pt}}
+
+\newcommand*{\tket@block@ET}{\kern-1pt\raisebox{.6pt}{\ttfamily ET}\kern1pt}
+\newcommand*{\tket@block@S}{\kern-2pt\raisebox{-0.5pt}{\ttfamily S}}
+\newcommand*{\tket@block@s}{\kern-2pt\raisebox{-0.5pt}{\ttfamily s}}
+
+
+%%%%% Handling reference GFs
+
+% User macros to get and set the reference year. \TKsetgf{***} is
+% just slightly shorter than \TKsetup{gf=***}.
+\newcommand*{\TKgetgf}{\tket@reference\xspace}
+\newcommand*{\TKsetgf}[1]{%
+  \ifstrequal{#1}{*}{\edef\tket@reference{\tket@heuristic}}{%
+    \ifnum\numexpr#1\relax>1955 %
+      \edef\tket@reference{\number\numexpr#1\relax}%
+    \else
+      \ifnum\numexpr#1\relax>99 %
+        \tket@error{Jeg kan ikke haandtere aarstallet `#1'}%
+          {Reference-generalforsamlingen skal vaere firecifret,\MessageBreak
+           fx 2008, eller tocifret, fx 98 og 04}%
+      \else
+        \ifnum\numexpr#1>55 %
+          \edef\tket@reference{\number\numexpr#1+1900\relax}%
+        \else
+          \edef\tket@reference{\number\numexpr#1+2000\relax}%
+        \fi
+      \fi
+    \fi
+  }
+  \tket@info{Reference-GF sat til `\tket@reference' \MessageBreak
+    (argumentet var `#1')}%
+}
+
+\ifnum\month<10
+  \csnumdef{tket@heuristic}{\year - 1}%
+\else
+  \csnumdef{tket@heuristic}{\year}%
+\fi
+\csdef{tket@reference}{0}
+% Now we install a hook which AtBeginDocument checks if tket@reference
+% has been set to some value. If not, we set a default (current \year
+% if we're in October, November, December; \year-1 otherwise), and
+% issue a warning. If we're between September 15 and September 30, we
+% also issue a warning.
+\AtBeginDocument{%
+  \ifnum\tket@reference =0\relax
+    \csnumdef{tket@reference}{\tket@heuristic}
+    \tket@info{No reference year set.\MessageBreak
+      Using \tket@reference \space as reference year}%
+    \ifnum\month=9
+      \ifnum\day>15
+        \tket@warnNL{Det er den \the\day. september\MessageBreak
+          Har generalforsamlingen fundet sted?}%
+      \fi
+    \fi
+  \fi
+}
+
+%%%%% Should we use abacus or rokokok\o ller for KASS icon?
+% /SVIF, november 2014
+\providecommand*{\tket@ikonKASS}{%
+  \iftoggle{tket@koelleKASS}%
+  {\ifnum\numexpr\tket@reference<2014 % Before INKA.
+    ikonINKA\else ikonKASS\fi}%
+  {ikonKASS}}
+
+
+%%%%% Option declaration and processing
+
+
+
+\newcommand*{\TKsetup}{\setkeys[TK]{tket}}
+
+% Calling \TKsetgf with * as argument resets the year to the
+% heuristically determined reference year. We might as well also allow
+% the key `refyear' to be present without value, with the same
+% meaning.
+\define@key[TK]{tket}{gf}[*]{\TKsetgf{#1}}
+
+% Key for defining the default height
+\define@key[TK]{tket}{ikonh}{\def\tket@iconheight{#1}}
+
+
+% \define@cmdkey syntax:
+% [prefix>]{family}[command prefix]{option name}{function executed}
+\define@cmdkey[TK]{tket}[tket@]{dollar}{}
+\define@cmdkey[TK]{tket}[tket@]{epsilon}{}
+\define@cmdkey[TK]{tket}[tket@]{cermC}{}
+\define@cmdkey[TK]{tket}[tket@]{vcC}{}
+% the value is then automatically stored in the macro 
+%
+% \<command prefix><option name>
+
+% For setting both cermC and vcC at once (to the same value):
+\define@key[TK]{tket}{C}{%
+  \def\tket@cermC{#1}%
+  \def\tket@vcC{#1}}
+
+
+\newcommand*{\tket@DefCustomBoolKey}[1]{%
+  \newtoggle{tket@#1}%
+  \define@choicekey*+[TK]{tket}{#1}[\tket@tmpa\tket@tmpb]
+    {false,true,no,yes,off,on,nej,ja,nejtak,jatak,niks,jep,nix}[true]
+    {\ifnumodd{\tket@tmpb}
+      {\toggletrue{tket@#1}}
+      {\togglefalse{tket@#1}}}
+    {\tket@error{Ugyldigt input}
+      {Vaerdien  ``##1'' er ikke gyldig for noeglen ``#1''.\MessageBreak
+        Det skal vaere ``true'' (eller ``yes'', ``on'', \MessageBreak
+        ``ja'', ``jatak'', ``jep'' eller ingenting)\MessageBreak
+        eller ``false'' (eller ``no'', ``off'', ``nej'', ``nejtak'',
+        ``niks'', ``nix'')}}%end of define@choicekey
+}%end of TKET@DefCustomBoolKey
+
+\tket@DefCustomBoolKey{eksponent}
+\tket@DefCustomBoolKey{koelleKASS}
+%\tket@DefCustomBoolKey{AA}
+
+% Initialize the keys to their default values (except refyear, which
+% is handled separately)
+\TKsetup{%
+  dollar=\$,
+  epsilon=\ensuremath{\epsilon},
+  eksponent=jep,
+  ikonh=1.0em,
+  koelleKASS=jatak,
+  C=\ensuremath{\mathbb{C}}}
+
+% xkeyval aids: xkeyval uses \@nil internally for parsing. This makes
+% it rather hard to have that token in a value. But \@car uses \@nil
+% as a delimiter. So we could either define our own version of \@car,
+% or use double braces.
+
+
+
+% Now we process the option list given when loading this package. It
+% is highly unlikely that any of the options are given as global
+% options to the document; in any case, we only process the options
+% explicitly passed to this package.
+
+\ProcessOptionsX[TK]<tket>
+
+\endinput
+
+
+Test file integrity:  ASCII 32-57, 58-126:  !"#$%&'()*+,-./0123456789
+:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
+%%
+%% End of file 'tket.sty'.
+
+%%% Local Variables: 
+%%% mode: auto-revert
+%%% End: 
