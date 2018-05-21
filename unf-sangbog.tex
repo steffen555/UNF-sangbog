@@ -95,9 +95,6 @@
 %%\usepackage[overhead]{songbook}               %% Overhead Transparency edition.
 \usepackage{titletoc}
 \usepackage{tket}  % Draws "TÅGEKAMMERET" correctly
-\usepackage{lipsum}
-
-
 
 %%%
 % Revision Date and Release Date definitions.
@@ -257,7 +254,16 @@ Historiske versioner: unf.dk/sangbog
 Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en ukendt forfatter, så skriv til sangbog@unf.dk.
 
 
-% \tableofcontents
+
+%%%
+% Begin the Table Of Contents.
+%%%
+\let\olditem\item
+\renewcommand{\item}{\par\hangindent=40pt}
+\twocolumn
+\input{unf-sangbog.toc}
+\renewcommand{\item}{\olditem}
+\onecolumn
 
 %%%
 % Turn on and define fancy page heading/footing definition.
