@@ -242,7 +242,7 @@
 
 %%% Kolofon
 \thispagestyle{empty}
-Fremstillet til UNF ScienceCamps 2018 - unf.dk/sciencecamps\\
+Sammensat til UNF ScienceCamps 2018 - unf.dk/sciencecamps\\
 Redaktør: Steffen Strunge Mathiesen m.fl.\\
 Indhold opsat i \LaTeX. Omslag opsat i Adobe InDesign.\\
 Design af omslag: KathArt Interactive\\
@@ -252,18 +252,6 @@ Digital version og kildekode: github.com/steffen555/UNF-sangbog\\
 Historiske versioner: unf.dk/sangbog
 \par\vspace*{\fill}
 Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en ukendt forfatter, så skriv til sangbog@unf.dk.
-
-
-
-%%%
-% Begin the Table Of Contents.
-%%%
-\let\olditem\item
-\renewcommand{\item}{\par\hangindent=40pt}
-\twocolumn
-\input{unf-sangbog.toc}
-\renewcommand{\item}{\olditem}
-\onecolumn
 
 %%%
 % Turn on and define fancy page heading/footing definition.
@@ -306,6 +294,39 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \fancyfoot[RE,LO]{\RFootFont Synges på eget ansvar}
 
 %%%
+% Table of contents
+%%%
+
+\clearpage
+\twocolumn
+\font\myTinySF=cmss8    at  8pt
+\font\myHugeSF=cmssbx10 at 25pt
+\newcommand{\CpyRtInfoFont}{\tiny\myTinySF}
+\newcommand{\myTitleFont}{\Huge\myHugeSF}
+\newcommand{\mySubTitleFont}{\large\sf}
+\renewcommand{\indexspace}{\medskip}
+
+% {\parindent 8pt
+%   {\myTitleFont Indhold}}\par
+% \vskip 5pt
+\renewcommand{\SBThechapter}{Indhold}
+% {\parindent 20pt
+%   {\mySubTitleFont --- with first lines in italic ---}}
+% \vskip 20pt
+\let\olditem\item
+\let\oldsubitem\subitem
+\let\oldsubsubitem\subsubitem
+\renewcommand{\item}{\par\hangindent=40pt}
+\renewcommand{\subitem}{\par\hangindent=40pt \hspace*{20pt}}
+\renewcommand{\subsubitem}{\par\hangindent=40pt \hspace*{30pt}}
+
+\input{unf-sangbog.tocx}
+
+\renewcommand{\item}{\olditem}
+\renewcommand{\subitem}{\oldsubitem}
+\renewcommand{\subsubitem}{\oldsubsubitem}
+
+%%%
 % Songbook begins.
 %%%
 \onecolumn
@@ -313,10 +334,11 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \twocolumn
 \input{songs/vi_kan_ikke_li.tex}
 \input{songs/vi_er_ikke_humanister.tex}
-\input{songs/er_jeg_humanist.tex}
+% \input{songs/er_jeg_humanist.tex}
 \input{songs/humanist.tex}
 \input{songs/humanist_adderer.tex}
 \input{songs/jeg_har_set_en_rigtig.tex}
+\input{songs/jeg_vil_laese.tex}
 \input{songs/din_mor.tex}
 \input{songs/glad_for_fysik.tex}
 
@@ -333,6 +355,7 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \input{songs/sort_snak.tex}
 \input{songs/en_veganer.tex}
 \input{songs/ingenioersangen.tex}
+% \input{songs/hvem_vil_ikke_gerne_have_sex.tex}
 
 \onecolumn
 \SBChapter{UNF}
@@ -352,12 +375,13 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \SBChapter{Studieliv og \LaTeX}
 \twocolumn
 \input{songs/taal_daj.tex}
-\input{songs/homo.tex}
-\input{songs/jeg_vil_laese.tex}
-\input{songs/de_tog_stadig_folk_ind.tex}
+% \input{songs/homo.tex}
+% \input{songs/de_tog_stadig_folk_ind.tex}
 \input{songs/eksamensangst.tex}
+\input{songs/ser_en_sort_klap_falde.tex}
 \input{songs/fuck_mit_liv.tex}
 \input{songs/maple_problemer.tex}
+\input{songs/reception.tex}
 \input{songs/texe_i_nat.tex}
 \input{songs/brug_latex.tex}
 \input{songs/texe_sangen.tex}
@@ -371,17 +395,18 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \input{songs/servern_er_crashed.tex}
 \input{songs/forever_diku.tex}
 \input{songs/han_koder_slam.tex}
+\input{songs/hjemmehackeriet.tex}
 \input{songs/i_morgen_er_verden_vor.tex}
 \input{songs/DAT62.tex}
-\input{songs/hjemmehackeriet.tex}
 \input{songs/8-bit-drikkesang.tex}
 \input{songs/HTML.tex}
 \input{songs/terminalsangen.tex}
 \input{songs/lambda_kalkylen.tex}
 \input{songs/doktrinen.tex}
-\input{songs/sidder_foran_skaermen.tex}
 \input{songs/sidder_der_ved_skaermen.tex}
+\input{songs/sidder_foran_skaermen.tex}
 \input{songs/afrundingsfejl.tex}
+\input{songs/editorhyldestsangen.tex}
 
 \onecolumn
 \SBChapter{Fysik}
@@ -402,6 +427,7 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \input{songs/kvantepartiklen.tex}
 \input{songs/forever_kvant.tex}
 \input{songs/du_skal_regne_kvant.tex}
+\input{songs/ser_en_bombe_spraenge.tex}
 
 \onecolumn
 \SBChapter{Matematik}
@@ -442,16 +468,22 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \twocolumn
 \input{songs/busted.tex}
 \input{songs/der_er_et_oelrigt_land.tex}
+Hjemmebrænderiet
 
 \onecolumn
 \SBChapter{Almindelige sange}
 \twocolumn
 \input{songs/puma.tex}
-% \input{songs/all_star.tex}
-% \input{songs/never_gonna_give_you_up.tex}
+\input{songs/all_star.tex}
+\input{songs/never_gonna_give_you_up.tex}
+Pokémon\\
+I Want It What Way\\
+Jutlandia\\
+YMCA
 \input{songs/elefant_kom_marcherende.tex}
 \input{songs/rekursiv_skovsang.tex}
 \input{songs/laerkerede.tex}
+
 
 
 
@@ -461,9 +493,9 @@ Hvis du har forslag til sange, rettelser, ris og ros, eller hvis du kender en uk
 \clearpage
 \font\myTinySF=cmss8    at  8pt
 \font\myHugeSF=cmssbx10 at 25pt
-\newcommand{\CpyRtInfoFont}{\tiny\myTinySF}
-\newcommand{\myTitleFont}{\Huge\myHugeSF}
-\newcommand{\mySubTitleFont}{\large\sf}
+% \newcommand{\CpyRtInfoFont}{\tiny\myTinySF}
+% \newcommand{\myTitleFont}{\Huge\myHugeSF}
+% \newcommand{\mySubTitleFont}{\large\sf}
 \renewcommand{\indexspace}{\medskip}
 
 {\parindent 8pt

@@ -45,6 +45,10 @@ makeindex -s songbook.ist -o $1.tdx $1.tIdx
 echo " "
 echo "The new Index file is called \`$1.tdx'."
 
+cp ./$1.toc ./"$1.tocx"
+
+echo "Copied \`$1.toc to \`$1.tocx"
+
 ###
 # End of script.
 ###
