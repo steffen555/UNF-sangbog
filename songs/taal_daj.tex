@@ -5,129 +5,70 @@
   {\TKET{}s Julerevy, 1987} % Eks. "Fysikrevy, 2010" eller "2010"
   {\NotCCLIed} % Lad stå som den er
 
+  \let\oldSBVerseCnt\theSBVerseCnt
+
+  \renewcommand{\theSBVerseCnt}{$\texttt{l[\oldSBVerseCnt]}$}
   \begin{SBVerse}
-    På den første dag i læseferien sagde jeg til mig selv:\\
     Der er god tid, jeg pjækker i dag.
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den anden dag i læseferien sagde jeg til mig selv:\\
-    Mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Mat’matik er trist
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den tredje dag i læseferien sagde jeg til mig selv:\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Jeg er træt
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den fjerde dag i læseferien sagde jeg til mig selv:\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Tror jeg går på druk -- \emph{Skål!}
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den femte dag i læseferien sagde jeg til mig selv:\\
-    Åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Åh, tømmermænd!
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den sjette dag i læseferien sagde jeg til mig selv:\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Der er fest i aften
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den syvende dag i læseferien sagde jeg til mig selv:\\
-    Hvor er min bog nu?\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Hvor er min bog nu?
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den ottende dag i læseferien sagde jeg til mig selv:\\
-    Der' film i TV,\\
-    hvor er min bog nu?\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Der' film i TV
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den niende dag i læseferien sagde jeg til mig selv:\\
-    Savner mine venner,\\
-    der' film i TV,\\
-    hvor er min bog nu?\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Savner mine venner
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den tiende dag i læseferien sagde jeg til mig selv:\\
-    Mon jeg kan nå det?\\
-    Savner mine venner,\\
-    der' film i TV,\\
-    hvor er min bog nu?\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Mon jeg kan nå det?
   \end{SBVerse}
 
   \begin{SBVerse}
-    På den elvete dag i læseferien sagde jeg til mig selv:\\
-    Nu skal der læses!\\
-    Mon jeg kan nå det?\\
-    Savner mine venner,\\
-    der' film i TV,\\
-    hvor er min bog nu?\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    der er god tid, jeg pjækker i dag.
+    Nu skal der læses!
   \end{SBVerse}
+
+  \begin{SBVerse}
+    Gud, det' i morgen!
+  \end{SBVerse}
+
+  \renewcommand{\theSBVerseCnt}{$n<11$}
+
+  \begin{SBVerse}
+    På den ($n+1$)'te dag i læseferien sagde jeg til mig selv:\\
+    \texttt{l[n::-1]}
+  \end{SBVerse}
+
+  \renewcommand{\theSBVerseCnt}{$11$}
 
   \begin{SBVerse}
     På den tolvte dag i læseferien sagde jeg til mig selv:\\
-    Gud, det' i morgen!\\
-    Nu skal der læses!\\
-    Mon jeg kan nå det?\\
-    Savner mine venner,\\
-    der' film i TV,\\
-    hvor er min bog nu?\\
-    Der er fest i aften,\\
-    åh, tømmermænd!\\
-    Tror jeg går på druk -- \emph{Skål!}\\
-    Jeg er træt,\\
-    mat’matik er trist,\\
-    Så'n gik tiden -- jeg dumped' i dag!
+    \texttt{l[11::-1][0:11]}\\
+    Så'n gik tiden, jeg dumped' i dag.
   \end{SBVerse}
+
 \end{song}
