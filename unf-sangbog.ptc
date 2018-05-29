@@ -1,10 +1,10 @@
 \ttl@starttoc {default@1}
 \contentsline {section}{\numberline {0} Vi kan ikke li'}{6}
-\contentsline {section}{\numberline {1} Vi er ikke humanister}{8}
+\contentsline {section}{\numberline {1} Vi er ikke humanister}{7}
 \contentsline {section}{\numberline {2} Humanist}{8}
 \contentsline {section}{\numberline {3} N\IeC {\r a}r en humanist adderer}{9}
 \contentsline {section}{\numberline {4} Jeg har set en rigtig .*}{10}
-\contentsline {section}{\numberline {5} Jeg vil l\IeC {\ae }se *}{11}
+\contentsline {section}{\numberline {5} Jeg vil l\IeC {\ae }se .*}{11}
 \contentsline {section}{\numberline {6} Din mor}{13}
 \contentsline {section}{\numberline {7} Glad for Fysik}{14}
 \ttl@stoptoc {default@1}
@@ -34,93 +34,93 @@
 \ttl@stoptoc {default@3}
 \ttl@starttoc {default@4}
 \contentsline {section}{\numberline {26} T\IeC {\r a}l daj' i l\IeC {\ae }seferien}{32}
-\contentsline {section}{\numberline {27} Eksamensangst}{33}
-\contentsline {section}{\numberline {28} N\IeC {\r a}r jeg ser en sort klap falde}{34}
-\contentsline {section}{\numberline {29} Fuck mit liv}{34}
-\contentsline {section}{\numberline {30} Maple-problemer}{35}
-\contentsline {section}{\numberline {31} Reception}{36}
-\contentsline {section}{\numberline {32} Hvad skal vi T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}'e i nat?}{37}
-\contentsline {section}{\numberline {33} Brug \LaTeX }{38}
-\contentsline {section}{\numberline {34} T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}'e-sangen}{39}
+\contentsline {section}{\numberline {27} Eksamensangst}{32}
+\contentsline {section}{\numberline {28} N\IeC {\r a}r jeg ser en sort klap falde}{33}
+\contentsline {section}{\numberline {29} Fuck mit liv}{33}
+\contentsline {section}{\numberline {30} Maple-problemer}{34}
+\contentsline {section}{\numberline {31} Reception}{35}
+\contentsline {section}{\numberline {32} Hvad skal vi T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}'e i nat?}{36}
+\contentsline {section}{\numberline {33} Brug \LaTeX }{37}
+\contentsline {section}{\numberline {34} T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m {}'e-sangen}{38}
 \ttl@stoptoc {default@4}
 \ttl@starttoc {default@5}
-\contentsline {section}{\numberline {35} Se min kode}{42}
-\contentsline {section}{\numberline {36} Jeg har fundet mig en bug}{42}
-\contentsline {section}{\numberline {37} Linieskriverdriversangen}{43}
-\contentsline {section}{\numberline {38} Server'n er crashed}{44}
-\contentsline {section}{\numberline {39} Forever DIKU}{44}
-\contentsline {section}{\numberline {40} Han koder slam}{45}
-\contentsline {section}{\numberline {41} Hjemmehackeriet}{47}
-\contentsline {section}{\numberline {42} I morgen er verden vor}{48}
-\contentsline {section}{\numberline {43} DAT62$\frac {1}{2}$80 Slagsang}{49}
-\contentsline {section}{\numberline {44} Programm\IeC {\o }rens 8-bit drikkesang}{49}
-\contentsline {section}{\numberline {45} HTML}{50}
-\contentsline {section}{\numberline {46} Terminalsangen}{51}
-\contentsline {section}{\numberline {47} $\lambda $-kalkylen}{51}
-\contentsline {section}{\numberline {48} Doktrinen}{52}
-\contentsline {section}{\numberline {49} Hvem sidder der ved sk\IeC {\ae }rmen}{52}
-\contentsline {section}{\numberline {50} Hvem sidder foran sk\IeC {\ae }rmen}{53}
-\contentsline {section}{\numberline {51} Afrundingsfejl}{53}
-\contentsline {section}{\numberline {52} Editorhyldestsangen}{55}
+\contentsline {section}{\numberline {35} Se min kode}{40}
+\contentsline {section}{\numberline {36} Jeg har fundet mig en bug}{40}
+\contentsline {section}{\numberline {37} Linieskriverdriversangen}{41}
+\contentsline {section}{\numberline {38} Server'n er crashed}{42}
+\contentsline {section}{\numberline {39} Forever DIKU}{42}
+\contentsline {section}{\numberline {40} Han koder slam}{43}
+\contentsline {section}{\numberline {41} Hjemmehackeriet}{45}
+\contentsline {section}{\numberline {42} I morgen er verden vor}{46}
+\contentsline {section}{\numberline {43} DAT62$\frac {1}{2}$80 Slagsang}{47}
+\contentsline {section}{\numberline {44} Programm\IeC {\o }rens 8-bit drikkesang}{47}
+\contentsline {section}{\numberline {45} HTML}{48}
+\contentsline {section}{\numberline {46} Terminalsangen}{49}
+\contentsline {section}{\numberline {47} $\lambda $-kalkylen}{49}
+\contentsline {section}{\numberline {48} Doktrinen}{50}
+\contentsline {section}{\numberline {49} Hvem sidder der ved sk\IeC {\ae }rmen}{50}
+\contentsline {section}{\numberline {50} Hvem sidder foran sk\IeC {\ae }rmen}{51}
+\contentsline {section}{\numberline {51} Afrundingsfejl}{51}
+\contentsline {section}{\numberline {52} Editorhyldestsangen}{53}
 \ttl@stoptoc {default@5}
 \ttl@starttoc {default@6}
-\contentsline {section}{\numberline {53} V\IeC {\r a}benfysik}{58}
-\contentsline {section}{\numberline {54} Fasebal i Kvanteland}{58}
-\contentsline {section}{\numberline {55} ASTRID}{59}
-\contentsline {section}{\numberline {56} Jeg er fysiker}{60}
-\contentsline {section}{\numberline {57} $\chi $-fitter}{60}
-\contentsline {section}{\numberline {58} Steve Hawking}{61}
-\contentsline {section}{\numberline {59} Kun fysik}{62}
-\contentsline {section}{\numberline {60} $\rho $-$\phi $-$\mu $}{63}
-\contentsline {section}{\numberline {61} A-kraft}{63}
-\contentsline {section}{\numberline {62} Kvanter i m\IeC {\r a}neskin}{64}
-\contentsline {section}{\numberline {63} Faster Than Light}{64}
-\contentsline {section}{\numberline {64} YBCO}{65}
-\contentsline {section}{\numberline {65} De seje tings sang}{66}
-\contentsline {section}{\numberline {66} Kvantepartiklen}{67}
-\contentsline {section}{\numberline {67} Forever kvant}{67}
-\contentsline {section}{\numberline {68} Du skal regne kvant}{68}
-\contentsline {section}{\numberline {69} N\IeC {\r a}r jeg ser en bombe spr\IeC {\ae }nge}{69}
+\contentsline {section}{\numberline {53} V\IeC {\r a}benfysik}{56}
+\contentsline {section}{\numberline {54} Fasebal i Kvanteland}{56}
+\contentsline {section}{\numberline {55} ASTRID}{57}
+\contentsline {section}{\numberline {56} Jeg er fysiker}{58}
+\contentsline {section}{\numberline {57} $\chi $-fitter}{58}
+\contentsline {section}{\numberline {58} Steve Hawking}{59}
+\contentsline {section}{\numberline {59} Kun fysik}{60}
+\contentsline {section}{\numberline {60} $\rho $-$\phi $-$\mu $}{61}
+\contentsline {section}{\numberline {61} A-kraft}{61}
+\contentsline {section}{\numberline {62} Kvanter i m\IeC {\r a}neskin}{62}
+\contentsline {section}{\numberline {63} Faster Than Light}{62}
+\contentsline {section}{\numberline {64} YBCO}{63}
+\contentsline {section}{\numberline {65} De seje tings sang}{64}
+\contentsline {section}{\numberline {66} Kvantepartiklen}{65}
+\contentsline {section}{\numberline {67} Forever kvant}{65}
+\contentsline {section}{\numberline {68} Du skal regne kvant}{66}
+\contentsline {section}{\numberline {69} N\IeC {\r a}r jeg ser en bombe spr\IeC {\ae }nge}{67}
 \ttl@stoptoc {default@6}
 \ttl@starttoc {default@7}
-\contentsline {section}{\numberline {70} Den kanoniske matematikersang}{72}
-\contentsline {section}{\numberline {71} Mat'matik}{73}
-\contentsline {section}{\numberline {72} Matrixrepr\IeC {\ae }sentationsteoremet}{73}
-\contentsline {section}{\numberline {73} Er du dus med Grassmans Lemma}{74}
-\contentsline {section}{\numberline {74} Her p\IeC {\r a} mat'matik}{75}
-\contentsline {section}{\numberline {75} Jeg er en matematiker fra HC\IeC {\O }}{75}
-\contentsline {section}{\numberline {76} P\IeC {\r a} mat'matik}{76}
-\contentsline {section}{\numberline {77} Matematikkens Historie 2}{77}
-\contentsline {section}{\numberline {78} Primtal}{78}
-\contentsline {section}{\numberline {79} Integralsangen}{79}
-\contentsline {section}{\numberline {80} Determinanter}{80}
-\contentsline {section}{\numberline {81} Ode til analyse 0}{80}
-\contentsline {section}{\numberline {82} Ode til analyse 1}{81}
-\contentsline {section}{\numberline {83} Hvad er det mest matematiske}{82}
-\contentsline {section}{\numberline {84} En ringe historie}{83}
-\contentsline {section}{\numberline {85} Bevis for Sk\IeC {\ae }ringss\IeC {\ae }tningen}{83}
+\contentsline {section}{\numberline {70} Den kanoniske matematikersang}{70}
+\contentsline {section}{\numberline {71} Mat'matik}{71}
+\contentsline {section}{\numberline {72} Matrixrepr\IeC {\ae }sentationsteoremet}{71}
+\contentsline {section}{\numberline {73} Er du dus med Grassmans Lemma}{72}
+\contentsline {section}{\numberline {74} Her p\IeC {\r a} mat'matik}{73}
+\contentsline {section}{\numberline {75} Jeg er en matematiker fra HC\IeC {\O }}{73}
+\contentsline {section}{\numberline {76} P\IeC {\r a} mat'matik}{74}
+\contentsline {section}{\numberline {77} Matematikkens Historie 2}{75}
+\contentsline {section}{\numberline {78} Primtal}{76}
+\contentsline {section}{\numberline {79} Integralsangen}{77}
+\contentsline {section}{\numberline {80} Determinanter}{78}
+\contentsline {section}{\numberline {81} Ode til analyse 0}{78}
+\contentsline {section}{\numberline {82} Ode til analyse 1}{79}
+\contentsline {section}{\numberline {83} Hvad er det mest matematiske}{80}
+\contentsline {section}{\numberline {84} En ringe historie}{81}
+\contentsline {section}{\numberline {85} Bevis for Sk\IeC {\ae }ringss\IeC {\ae }tningen}{81}
 \ttl@stoptoc {default@7}
 \ttl@starttoc {default@8}
-\contentsline {section}{\numberline {86} The New Periodic Table Song}{86}
-\contentsline {section}{\numberline {87} Kemisk elskovsvise}{87}
-\contentsline {section}{\numberline {88} Kemisk julevise}{87}
-\contentsline {section}{\numberline {89} 10 sm\IeC {\r a} biorus}{88}
-\contentsline {section}{\numberline {90} Spad i waders}{89}
-\contentsline {section}{\numberline {91} Nano}{90}
-\contentsline {section}{\numberline {92} Laborant}{91}
-\contentsline {section}{\numberline {93} Selektionssangen}{91}
-\contentsline {section}{\numberline {94} N\IeC {\r a}r jeg kloner min kat}{92}
-\contentsline {section}{\numberline {95} Pest}{93}
+\contentsline {section}{\numberline {86} The New Periodic Table Song}{84}
+\contentsline {section}{\numberline {87} Kemisk elskovsvise}{85}
+\contentsline {section}{\numberline {88} Kemisk julevise}{85}
+\contentsline {section}{\numberline {89} 10 sm\IeC {\r a} biorus}{86}
+\contentsline {section}{\numberline {90} Spad i waders}{87}
+\contentsline {section}{\numberline {91} Nano}{88}
+\contentsline {section}{\numberline {92} Laborant}{89}
+\contentsline {section}{\numberline {93} Selektionssangen}{89}
+\contentsline {section}{\numberline {94} N\IeC {\r a}r jeg kloner min kat}{90}
+\contentsline {section}{\numberline {95} Pest}{91}
 \ttl@stoptoc {default@8}
 \ttl@starttoc {default@9}
-\contentsline {section}{\numberline {96} Busted}{96}
-\contentsline {section}{\numberline {97} Der er et \IeC {\o }lrigt land}{96}
+\contentsline {section}{\numberline {96} Busted}{94}
+\contentsline {section}{\numberline {97} Der er et \IeC {\o }lrigt land}{94}
 \ttl@stoptoc {default@9}
 \ttl@starttoc {default@10}
-\contentsline {section}{\numberline {98} Puma (Stork)}{100}
-\contentsline {section}{\numberline {99} All Star}{101}
-\contentsline {section}{\numberline {100} Never Gonna Give You Up}{102}
-\contentsline {section}{\numberline {101} En elefant kom marcherende}{103}
-\contentsline {section}{\numberline {102} Den rekursive skovsang}{103}
-\contentsline {section}{\numberline {103} Jeg ved en l\IeC {\ae }rkerede}{103}
+\contentsline {section}{\numberline {98} Puma (Stork)}{98}
+\contentsline {section}{\numberline {99} All Star}{98}
+\contentsline {section}{\numberline {100} Never Gonna Give You Up}{99}
+\contentsline {section}{\numberline {101} En elefant kom marcherende}{100}
+\contentsline {section}{\numberline {102} Den rekursive skovsang}{101}
+\contentsline {section}{\numberline {103} Jeg ved en l\IeC {\ae }rkerede}{101}
 \contentsfinish 
